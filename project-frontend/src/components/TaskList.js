@@ -7,7 +7,7 @@ import TaskCard from "./TaskCard";
 
 export default function TaskList() {
   return (
-    <div>
+    <div className="tasklist--div">
       <Container className="square border border-dark" style={{"width": "600px"}}>
         <Navbar>
           <Container className="square border border-dark" style={{"height": "100px"}}>

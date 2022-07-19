@@ -1,11 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import TaskList from './components/TaskList';
+import './App.css';
+import Navbar from './components/Navbar';
+import MainBody from './components/MainBody';
 
 function App() {
   return (
     <div className="App">
-      <TaskList />
+      <Navbar />
+      <MainBody />
     </div>
   );
 }

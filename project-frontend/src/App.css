@@ -1,0 +1,158 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+.App{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar--div{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100px;
+  height: 8%;
+}
+
+.navbar--logo{
+  margin-left: 10px;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+}
+
+/* Dropdown Button */
+.navbar--dropdown-room-button {
+  margin: 0px 10px;
+  background-color: white;
+  min-width: 150px;
+  color: black;
+  padding: 8px 16px;
+  font-size: 16px;
+  border: none;
+  align-self: center;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.navbar--dropdown-room {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.navbar--dropdown-room-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.navbar--dropdown-room-content > a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.navbar--dropdown-room-content > a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.navbar--dropdown-room:hover .navbar--dropdown-room-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.navbar--dropdown-room:hover .navbar--dropdown-room-button {background-color: whitesmoke;} 
+
+
+
+.navbar--empty{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+  /* Dropdown Button */
+.navbar--dropdown-user-button {
+  background-color: white;
+  color: black;
+  padding: 8px 16px;
+  font-size: 16px;
+  border: none;
+  align-self: center;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.navbar--dropdown-user {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.navbar--dropdown-user-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.navbar--dropdown-user-content > a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.navbar--dropdown-user-content > a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.navbar--dropdown-user:hover .navbar--dropdown-user-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.navbar--dropdown-user:hover .navbar--dropdown-user-button {background-color: whitesmoke;} 
+
+.navbar--invite-button{
+  margin: 0px 10px;
+  background-color: white;
+  color: rgb(91, 91, 246);
+  padding: 8px 16px;
+  font-size: 16px;
+  min-width: 150px;
+  border: 2px solid rgb(91, 91, 246);
+  border-radius: 10px;
+  align-self: center;
+}
+
+.navbar--invite-button:hover, .navbar--tasks-button:hover{
+  background-color: rgb(198, 198, 255);
+}
+
+.navbar--tasks-button{
+  margin: 0px 10px;
+  background-color: white;
+  color: rgb(91, 91, 246);
+  padding: 8px 16px;
+  font-size: 16px;
+  border: 2px solid rgb(91, 91, 246);
+  border-radius: 10px;
+  align-self: center;
+}
+
+.main--div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 92%;
+}
+
+.tasklist--div{
+  max-height: 500px;
+}
