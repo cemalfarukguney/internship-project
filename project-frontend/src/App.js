@@ -10,6 +10,7 @@ function App() {
   const callbackFunction = (childData) => {
     setState(childData);
   }
+  
   return (
     <div className="App">
       <Navbar parentCallback={callbackFunction}/>
