@@ -1,8 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from 'react';
 import {Button} from "react-bootstrap";
-
 import TaskList from './components/TaskList';
+import './App.css';
+import Navbar from './components/Navbar';
+import MainBody from './components/MainBody';
+
 
 function App() {
 
@@ -14,6 +17,8 @@ function App() {
 
   return (
     <div className="App">
+      <Navbar />
+      <MainBody />
       <Button className="float-end" onClick={handleClick}>TaskList</Button>
       {isShown && <TaskList />}
     </div>
