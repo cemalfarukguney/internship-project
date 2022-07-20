@@ -1,11 +1,10 @@
 import React from "react";
 import { Navbar, Container, Button, Col, Row} from "react-bootstrap";
 import { MdCancel } from 'react-icons/md';
-//import { FiMoreVertical } from 'react-icons/fi'
 
 import TaskCard from "./TaskCard";
 
-export default function TaskList() {
+export default function TaskList({handleClick}) {
   return (
     <div>
       <Container className="square border border-dark float-end" style={{"width": "600px"}}>
@@ -26,7 +25,7 @@ export default function TaskList() {
               <Button variant="light" style={{"backgroundColor": "skyblue"}}>Import from JIRA</Button>
             </Col>
             <Col sm={2}>
-              <Button variant="danger" className="float-end"><MdCancel /></Button>
+              <Button variant="danger" className="float-end" onClick={handleClick}><MdCancel /></Button>
             </Col>
           </Container>
         </Navbar>
