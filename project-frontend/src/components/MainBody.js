@@ -4,7 +4,7 @@ import {useState} from 'react';
 import TaskList from "./TaskList";
 import {Button} from "react-bootstrap";
 
-export default function MainBody(){
+export default function MainBody(props){
 
     const [isShown, setIsShown] = useState(false);
 
@@ -16,8 +16,7 @@ export default function MainBody(){
         <div className="main--div">
             PICK YOUR CARDS
             <div>
-                <Button className="float-end" onClick={handleClick}>Task List</Button>
-                {isShown && <TaskList handleClick={handleClick} />}
+                {props.taskState && <TaskList handleClick={handleClick} />}
             </div>
         </div>
     );

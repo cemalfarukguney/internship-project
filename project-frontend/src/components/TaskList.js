@@ -25,7 +25,10 @@ export default function TaskList({handleClick}) {
               <Button variant="light" style={{"backgroundColor": "skyblue"}}>Import from JIRA</Button>
             </Col>
             <Col sm={2}>
-              <Button variant="danger" className="float-end" onClick={handleClick}><MdCancel /></Button>
+              <Button variant="danger" className="float-end"
+              //  onClick={handleClick}
+              >
+                <MdCancel /></Button>
             </Col>
           </Container>
         </Navbar>
