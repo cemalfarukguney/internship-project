@@ -8,7 +8,7 @@ import TaskCard from "./TaskCard";
 export default function TaskList() {
   return (
     <div>
-      <Container className="square border border-dark" style={{"width": "600px"}}>
+      <Container className="square border border-dark float-end" style={{"width": "600px"}}>
         <Navbar>
           <Container className="square border border-dark" style={{"height": "100px"}}>
             <Col sm={3}>
@@ -25,7 +25,7 @@ export default function TaskList() {
             <Col sm={2}>
               <Button variant="light" style={{"backgroundColor": "skyblue"}}>Import from JIRA</Button>
             </Col>
-            <Col>
+            <Col sm={2}>
               <Button variant="danger" className="float-end"><MdCancel /></Button>
             </Col>
           </Container>
