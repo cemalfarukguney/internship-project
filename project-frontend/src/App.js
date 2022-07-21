@@ -16,7 +16,7 @@ function App() {
   
   return (
     <div className="App">
-      <Navbar parentCallback={callbackFunction}/>
+      <Navbar parentCallback={callbackFunction} username="Name" roomName="Room312"/>
       <MainBody taskState={state} taskList={taskList} />
     </div>
   );

@@ -3,6 +3,7 @@ import {MdTask, MdKeyboardArrowDown} from 'react-icons/md';
 import {useState} from 'react';
 import {IoPersonAdd} from 'react-icons/io5'
 import SettingsPopup from "./SettingsPopup";
+import HistoryPopup from "./HistoryPopup";
 
 export default function Navbar(props){
 
@@ -19,6 +20,12 @@ export default function Navbar(props){
     const settingsClick = event => {
         setSettingsPopup(current => !current);
     };
+    
+    const [historyPopup, setHistoryPopup] = useState(false);
+
+    const historyClick = event => {
+        setHistoryPopup(current => !current);
+    };
 
     return (
         <nav className="navbar--div">
@@ -26,15 +33,15 @@ export default function Navbar(props){
                 <img className="navbar--logo" src="https://logos-world.net/wp-content/uploads/2021/03/Yapi-Kredi-Emblem.png" />
             </a> 
             <div className="navbar--dropdown-room">
-                <button className="navbar--dropdown-room-button">Room Name <MdKeyboardArrowDown /> </button>
+                <button className="navbar--dropdown-room-button">{props.roomName} <MdKeyboardArrowDown /> </button>
                 <div className="navbar--dropdown-room-content">
                     <a href="#" onClick={settingsClick}>Game Settings</a>
-                    <a href="#">Voting History</a>
+                    <a href="#" onClick={historyClick}>Voting History</a>
                 </div>
             </div>
             <div className="navbar--empty"></div>
             <div className="navbar--dropdown-user">
-                <button className="navbar--dropdown-user-button">Username <MdKeyboardArrowDown /> </button>
+                <button className="navbar--dropdown-user-button">{props.username} <MdKeyboardArrowDown /> </button>
                 <div className="navbar--dropdown-user-content">
                     <a href="#">Link1</a>
                     <a href="#">Link2</a>
@@ -45,7 +52,8 @@ export default function Navbar(props){
             <button className="navbar--tasks-button" onClick={handleClick}>
                 <MdTask />
             </button>
-            <SettingsPopup trigger={settingsPopup} setTrigger={setSettingsPopup}/>
+            <SettingsPopup trigger={settingsPopup} roomName={props.roomName} setTrigger={setSettingsPopup}/>
+            <HistoryPopup trigger={historyPopup} setTrigger={setHistoryPopup}/>
         </nav>
     );
 }

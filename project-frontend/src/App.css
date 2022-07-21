@@ -162,8 +162,8 @@
   max-height: 500px;
 }
 
-.popup{
-  position: fixed;
+/* .popup{
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -181,10 +181,14 @@
   width: 100%;
   max-width: 640px;
   background-color: #FFF;
-}
+} */
 
 .popup--close-button{
   position: absolute;
-  top: 16px;
+  top: 24px;
   right: 16px;
+}
+
+.narrow-select{
+  max-width: 250px;
 }

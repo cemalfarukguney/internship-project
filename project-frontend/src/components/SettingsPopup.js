@@ -1,12 +1,13 @@
 import React from 'react'
-import { Form, CloseButton, Button } from 'react-bootstrap';
-import {MdOutlineClose} from "react-icons/md"
+import { Form, CloseButton, Button, Modal } from 'react-bootstrap';
 
 function SettingsPopup(props) {
   return (props.trigger) ? (
-    <div className='popup'>
-      <div className='popup--div'>
+    <Modal show={props.trigger} centered size='lg'>
+      <Modal.Header>
         <h2>Game Settings</h2>
+      </Modal.Header>
+      <Modal.Body>
         <Form>
           <Form.Group className='mb-3'>
             <Form.Label>Game Facilitator</Form.Label>
@@ -18,7 +19,7 @@ function SettingsPopup(props) {
           </Form.Group>
           <Form.Group className='mb-3'>
             <Form.Label>Game's Name</Form.Label>
-            <Form.Control type='text'></Form.Control>
+            <Form.Control type='text' defaultValue={props.roomName}></Form.Control>
           </Form.Group>
           <Form.Group className='mb-3'>
             <Form.Label>Voting System</Form.Label>
@@ -48,13 +49,13 @@ function SettingsPopup(props) {
           <Button variant='primary' type='submit' size='lg'>Submit</Button>
           </div>
         </Form>
+      </Modal.Body> 
         {/* <a className='popup--close-button' href="#" onClick={() => props.setTrigger(false)}>
           <MdOutlineClose/>
         </a> */}
         <CloseButton className='popup--close-button' onClick={() => props.setTrigger(false)}/>
         {props.children}
-      </div>
-    </div>
+    </Modal>
   ) :"";
 }
 
