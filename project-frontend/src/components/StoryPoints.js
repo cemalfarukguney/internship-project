@@ -1,45 +1,13 @@
 import React from "react";
-import {Container, Row, Col, Button} from "react-bootstrap";
+import {Dropdown, DropdownButton} from "react-bootstrap";
 
 function StoryPoints() {
   return (
-    <Container
-      className="square border border-dark"
-      style={{ marginTop: "35px" }}
-    >
-      <Col>
-        <Row><Button variant="light">0</Button></Row>
-        <Row><Button variant="light">1</Button></Row>
-        <Row><Button variant="light">2</Button></Row>
-        <Row>
-          <Button variant="light">3</Button>
-        </Row>
-        <Row>
-          <Button variant="light">5</Button>
-        </Row>
-        <Row>
-          <Button variant="light">8</Button>
-        </Row>
-        <Row>
-          <Button variant="light">13</Button>
-        </Row>
-        <Row>
-          <Button variant="light">21</Button>
-        </Row>
-        <Row>
-          <Button variant="light">34</Button>
-        </Row>
-        <Row>
-          <Button variant="light">55</Button>
-        </Row>
-        <Row>
-          <Button variant="light">89</Button>
-        </Row>
-        <Row>
-          <Button variant="light">?</Button>
-        </Row>
-      </Col>
-    </Container>
+    <DropdownButton id="dropdown-basic-button" title="Dropdown button">
+      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+      <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+      <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+    </DropdownButton>
   );
 }
 

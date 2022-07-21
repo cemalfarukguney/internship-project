@@ -1,21 +1,25 @@
 import React from "react";
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Button,
   Card,
   Container,
-  OverlayTrigger,
-  Popover,
   Modal,
-  Form
+  Form,
+  Dropdown,
+  DropdownButton,
 } from "react-bootstrap";
 
-import StoryPoints from "./StoryPoints";
-import {CgMore} from "react-icons/cg"
+import { CgMore } from "react-icons/cg";
 
 function TaskCard() {
-
   const [show, setShow] = useState(false);
+  const [storyPoint, setStoryPoint] = useState("-");
+  const storyPoints = ["1", "2", "3", "5", "8", "13", "21", "34", "55", "89", "?"];
+  
+  const changeStoryPoint = (sp) => {
+    setStoryPoint(sp);
+  }
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -25,32 +29,28 @@ function TaskCard() {
         <Card>
           <Card.Header>PP - 1</Card.Header>
           <Card.Body>
-            <Button variant="outline-danger" className="float-end" onClick={handleShow} style={{marginLeft: "20px", fontSize: "10px"}}><CgMore/></Button>
-            <Card.Title>TaskName</Card.Title> 
-            <Button variant="primary">Vote this issue</Button>
-            <OverlayTrigger
-              trigger="click"
-              placement="bottom"
-              rootClose
-              overlay={
-                <Popover title="Popover bottom">
-                  <StoryPoints />
-                </Popover>
-              }
+            <Button
+              variant="outline-danger"
+              className="float-end"
+              onClick={handleShow}
+              style={{ marginLeft: "20px", fontSize: "10px" }}
             >
-              <Button
-                variant="dark"
-                className="float-end"
-                style={{
-                  width: "70px",
-                  height: "70px",
-                  marginLeft: "10px",
-                  fontSize: "23px",
-                }}
-              >
-                8
-              </Button>
-            </OverlayTrigger>
+              <CgMore />
+            </Button>
+            <Card.Title>TaskName</Card.Title>
+            <Button variant="primary">Vote this issue</Button>
+            <DropdownButton variant="dark" 
+                            className="float-end" 
+                            style={{
+                                  size: "lg",
+                                  marginLeft: "10px",
+                                  fontSize: "23px",}} 
+                            id="dropdown-basic-button" 
+                            title={storyPoint}>
+              {storyPoints?.map((selectedStoryPoint) => (
+                <Dropdown.Item onClick={() => changeStoryPoint(selectedStoryPoint)}>{selectedStoryPoint}</Dropdown.Item>
+              ))}
+            </DropdownButton>
             <Button variant="info" className="float-end">
               7.6
             </Button>
