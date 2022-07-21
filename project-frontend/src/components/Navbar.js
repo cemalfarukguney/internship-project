@@ -2,6 +2,7 @@ import React from "react";
 import {MdTask, MdKeyboardArrowDown} from 'react-icons/md';
 import {useState} from 'react';
 import {IoPersonAdd} from 'react-icons/io5'
+import SettingsPopup from "./SettingsPopup";
 
 export default function Navbar(props){
 
@@ -13,6 +14,12 @@ export default function Navbar(props){
         console.log(isShown);
     };
 
+    const [settingsPopup, setSettingsPopup] = useState(false);
+
+    const settingsClick = event => {
+        setSettingsPopup(current => !current);
+    };
+
     return (
         <nav className="navbar--div">
              <a href="">
@@ -21,7 +28,7 @@ export default function Navbar(props){
             <div className="navbar--dropdown-room">
                 <button className="navbar--dropdown-room-button">Room Name <MdKeyboardArrowDown /> </button>
                 <div className="navbar--dropdown-room-content">
-                    <a href="#">Game Settings</a>
+                    <a href="#" onClick={settingsClick}>Game Settings</a>
                     <a href="#">Voting History</a>
                 </div>
             </div>
@@ -38,6 +45,7 @@ export default function Navbar(props){
             <button className="navbar--tasks-button" onClick={handleClick}>
                 <MdTask />
             </button>
+            <SettingsPopup trigger={settingsPopup} setTrigger={setSettingsPopup}/>
         </nav>
     );
 }
