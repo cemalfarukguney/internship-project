@@ -12,10 +12,10 @@ import {
 
 import { CgMore } from "react-icons/cg";
 
-function TaskCard() {
+function TaskCard(props) {
   const [show, setShow] = useState(false);
-  const [storyPoint, setStoryPoint] = useState("-");
-  const storyPoints = ["1", "2", "3", "5", "8", "13", "21", "34", "55", "89", "?"];
+  const [storyPoint, setStoryPoint] = useState(props.task.storyPoint);
+  const storyPoints = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "89", "?"];
   
   const changeStoryPoint = (sp) => {
     setStoryPoint(sp);
@@ -27,7 +27,7 @@ function TaskCard() {
     <>
       <Container className="w-100 p-2">
         <Card>
-          <Card.Header>PP - 1</Card.Header>
+          <Card.Header>PP - {props.task.id}</Card.Header>
           <Card.Body>
             <Button
               variant="outline-danger"
@@ -37,7 +37,7 @@ function TaskCard() {
             >
               <CgMore />
             </Button>
-            <Card.Title>TaskName</Card.Title>
+            <Card.Title>{props.task.taskName}</Card.Title>
             <Button variant="primary">Vote this issue</Button>
             <DropdownButton variant="dark" 
                             className="float-end" 
@@ -52,7 +52,7 @@ function TaskCard() {
               ))}
             </DropdownButton>
             <Button variant="info" className="float-end">
-              7.6
+              ortalama
             </Button>
           </Card.Body>
         </Card>
