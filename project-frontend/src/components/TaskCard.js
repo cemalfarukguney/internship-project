@@ -64,24 +64,30 @@ function TaskCard(props) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Task Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Spring</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                autoFocus
+                type="text"
+                value="Örnek Spring"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+              <Form.Label>Task Name</Form.Label>
+              <Form.Control
+                type="text"
+                value={props.task.taskName}
               />
             </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+              <Form.Label>Task Description</Form.Label>
+              <Form.Control as="textarea" value={props.task.taskDescription} rows={3} />
             </Form.Group>
           </Form>
         </Modal.Body>
