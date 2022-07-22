@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {IoPersonAdd} from 'react-icons/io5'
 import SettingsPopup from "./SettingsPopup";
 import HistoryPopup from "./HistoryPopup";
+import InvitationPopup from "./InvitationPopup";
 
 export default function Navbar(props){
 
@@ -27,6 +28,13 @@ export default function Navbar(props){
         setHistoryPopup(current => !current);
     };
 
+    const [invitationPopup, setInvitationPopup] = useState(false);
+
+    const invitationClick = event => {
+        setInvitationPopup(current => !current);
+    };
+
+
     return (
         <nav className="navbar--div">
              <a href="">
@@ -48,12 +56,13 @@ export default function Navbar(props){
                     <a href="#">Link3</a>
                 </div>
             </div>
-            <button className="navbar--invite-button">Invite colleagues <IoPersonAdd/></button>
+            <button className="navbar--invite-button" onClick={invitationClick}>Invite colleagues <IoPersonAdd/></button>
             <button className="navbar--tasks-button" onClick={handleClick}>
                 <MdTask />
             </button>
             <SettingsPopup trigger={settingsPopup} roomName={props.roomName} setTrigger={setSettingsPopup}/>
             <HistoryPopup trigger={historyPopup} setTrigger={setHistoryPopup}/>
+            <InvitationPopup trigger={invitationPopup} setTrigger={setInvitationPopup}/>
         </nav>
     );
 }
