@@ -7,19 +7,34 @@ import TaskCard from "./TaskCard";
 export default function TaskList(props) {
   const taskList = props.taskList;
 
-  const sumStoryPoint = taskList.reduce((accumulator, object) => {
+/*   const sumStoryPoint = taskList.reduce((accumulator, object) => {
     return accumulator + parseInt(object.storyPoint);
-  }, 0);
+  }, 0); */
 
-  const [totalPoints, setTotalPoints] = useState(sumStoryPoint);
+  const [totalPoints, setTotalPoints] = useState(0);
 
+  function isInteger(value) {
+    return /^\d+$/.test(value);
+  }
 
   const changeTotalPoint = (oldStoryPoint, newStoryPoint) => {
-    return (
-      setTotalPoints(
-        totalPoints + (parseInt(newStoryPoint) - parseInt(oldStoryPoint))
-      )
-    )
+    if(oldStoryPoint != null){
+      if(isInteger(oldStoryPoint) && isInteger(newStoryPoint)){
+        return (setTotalPoints(totalPoints + (parseInt(newStoryPoint)) - (parseInt(oldStoryPoint))))
+      } else if(isInteger(oldStoryPoint) && !isInteger(newStoryPoint)) {
+        return (setTotalPoints(totalPoints - (parseInt(oldStoryPoint)))) 
+      } else if(!isInteger(oldStoryPoint) && isInteger(newStoryPoint)) {
+        return(setTotalPoints(totalPoints + (parseInt(newStoryPoint))))
+      } else {
+        return(setTotalPoints(totalPoints))
+      }
+    } else {
+      if(isInteger(newStoryPoint)){
+        return(setTotalPoints(totalPoints + (parseInt(newStoryPoint))))
+      } else {
+        return(setTotalPoints(totalPoints))
+      }
+    }
   };
 
   return (
