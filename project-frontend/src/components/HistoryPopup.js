@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, CloseButton, Button, Table, Modal } from 'react-bootstrap';
+import { Form, CloseButton, Table, Modal } from 'react-bootstrap';
 
 function HistoryPopup(props) {
     return (props.trigger) ? (
