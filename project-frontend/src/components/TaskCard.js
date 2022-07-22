@@ -18,7 +18,11 @@ function TaskCard(props) {
   const storyPoints = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "89", "?"];
   
   const changeStoryPoint = (sp) => {
+    props.changeTotalPoint(storyPoint, sp);
+    console.log("Old Story Point", storyPoint);
+    console.log("New Story Point", sp);
     setStoryPoint(sp);
+    props.task.storyPoint = storyPoint;
   }
 
   const handleClose = () => setShow(false);
@@ -47,8 +51,8 @@ function TaskCard(props) {
                                   fontSize: "23px",}} 
                             id="dropdown-basic-button" 
                             title={storyPoint}>
-              {storyPoints?.map((selectedStoryPoint) => (
-                <Dropdown.Item onClick={() => changeStoryPoint(selectedStoryPoint)}>{selectedStoryPoint}</Dropdown.Item>
+              {storyPoints?.map((selectedStoryPoint, index) => (
+                <Dropdown.Item key={index} onClick={() => changeStoryPoint(selectedStoryPoint)}>{selectedStoryPoint}</Dropdown.Item>
               ))}
             </DropdownButton>
             <Button variant="info" className="float-end">

@@ -1,22 +1,38 @@
 import React from "react";
-import { Navbar, Container, Button, Col, Row} from "react-bootstrap";
+import { useState } from "react";
+import { Navbar, Container, Button, Col, Row } from "react-bootstrap";
 
 import TaskCard from "./TaskCard";
 
 export default function TaskList(props) {
-
   const taskList = props.taskList;
-  let totalPoints = 0;
-  
-  taskList.map((task) => {
-    return(totalPoints += parseInt(task.storyPoint));
-  })
+
+  const sumStoryPoint = taskList.reduce((accumulator, object) => {
+    return accumulator + parseInt(object.storyPoint);
+  }, 0);
+
+  const [totalPoints, setTotalPoints] = useState(sumStoryPoint);
+
+
+  const changeTotalPoint = (oldStoryPoint, newStoryPoint) => {
+    return (
+      setTotalPoints(
+        totalPoints + (parseInt(newStoryPoint) - parseInt(oldStoryPoint))
+      )
+    )
+  };
 
   return (
     <div>
-      <Container className="square border border-dark float-end overflow-auto" style={{"width": "600px", maxHeight: "800px"}}>
+      <Container
+        className="square border border-dark float-end overflow-auto"
+        style={{ width: "600px", maxHeight: "800px" }}
+      >
         <Navbar>
-          <Container className="square border border-dark" style={{"height": "100px"}}>
+          <Container
+            className="square border border-dark"
+            style={{ height: "100px" }}
+          >
             <Col sm={3}>
               <Navbar.Brand>Issues</Navbar.Brand>
             </Col>
@@ -33,8 +49,14 @@ export default function TaskList(props) {
             </Col>
           </Container>
         </Navbar>
-        {taskList.map((task) => {
-          return (<TaskCard task={task}/>)
+        {taskList.map((task, index) => {
+          return (
+            <TaskCard
+              key={index}
+              task={task}
+              changeTotalPoint={changeTotalPoint}
+            />
+          );
         })}
       </Container>
     </div>

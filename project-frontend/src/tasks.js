@@ -21,28 +21,7 @@ const tasks = [
     id: 4,
     taskName: "Makine Öğrenmesi modellerinin geliştirilmesi",
     taskDescription: "Çeşitli makine öğrenmesi algoritmaları kullanılarak en iyi sonucun elde edilmesivsdcvsvsvsvsvsvcsvsvsvssv",
-    storyPoint: "3"
-  },
-  {
-    id: 4,
-    taskName: "Makine Öğrenmesi modellerinin geliştirilmesi",
-    taskDescription: "Çeşitli makine öğrenmesi algoritmaları kullanılarak en iyi sonucun elde edilmesivsdcvsvsvsvsvsvcsvsvsvssv",
-    storyPoint: "3"
-  },  {
-    id: 4,
-    taskName: "Makine Öğrenmesi modellerinin geliştirilmesi",
-    taskDescription: "Çeşitli makine öğrenmesi algoritmaları kullanılarak en iyi sonucun elde edilmesivsdcvsvsvsvsvsvcsvsvsvssv",
-    storyPoint: "3"
-  },  {
-    id: 4,
-    taskName: "Makine Öğrenmesi modellerinin geliştirilmesi",
-    taskDescription: "Çeşitli makine öğrenmesi algoritmaları kullanılarak en iyi sonucun elde edilmesivsdcvsvsvsvsvsvcsvsvsvssv",
-    storyPoint: "3"
-  },  {
-    id: 4,
-    taskName: "Makine Öğrenmesi modellerinin geliştirilmesi",
-    taskDescription: "Çeşitli makine öğrenmesi algoritmaları kullanılarak en iyi sonucun elde edilmesivsdcvsvsvsvsvsvcsvsvsvssv",
-    storyPoint: "3"
+    storyPoint: "8"
   },
 ];
 
