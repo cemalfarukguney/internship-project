@@ -1,7 +1,16 @@
-import React from 'react'
+import React, {useContext, useRef} from 'react'
 import { Form, CloseButton, Button, Modal } from 'react-bootstrap';
+import { UserContext } from '../UserContext';
 
 function SettingsPopup(props) {
+  const roomNameRef = useRef(null);
+  const {roomName, setRoomName} = useContext(UserContext)[1];
+
+  function handleSubmit(){
+    setRoomName(roomNameRef.current.value);
+    props.setTrigger(false);
+  }
+
   return (props.trigger) ? (
     <Modal show={props.trigger} centered size='lg'>
       <Modal.Header>
@@ -19,7 +28,7 @@ function SettingsPopup(props) {
           </Form.Group>
           <Form.Group className='mb-3'>
             <Form.Label>Game's Name</Form.Label>
-            <Form.Control type='text' defaultValue={props.roomName}></Form.Control>
+            <Form.Control ref={roomNameRef} type='text' defaultValue={roomName}></Form.Control>
           </Form.Group>
           <Form.Group className='mb-3'>
             <Form.Label>Voting System</Form.Label>
@@ -46,7 +55,7 @@ function SettingsPopup(props) {
             </Form.Select>
           </Form.Group>
           <div className='d-grid gap-2'>
-          <Button variant='primary' type='submit' size='lg'>Submit</Button>
+          <Button variant='primary' type='submit' size='lg' onClick={handleSubmit}>Submit</Button>
           </div>
         </Form>
       </Modal.Body> 

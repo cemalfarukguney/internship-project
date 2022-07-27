@@ -26,7 +26,7 @@ function InvitationPopup(props) {
             </Modal.Body>
             {copySuccess &&
             <Alert variant="primary">
-                <p className='mb-0'>
+                <p className='mb-0 text-center'>
                     Invitation Link Copied Successfully
                 </p>
             </Alert>}
