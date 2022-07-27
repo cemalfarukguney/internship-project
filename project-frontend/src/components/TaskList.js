@@ -1,21 +1,28 @@
 import React from "react";
 import { useState } from "react";
 import { Navbar, Container, Button, Col, Row } from "react-bootstrap";
-
+import tasks from "../tasks";
 import TaskCard from "./TaskCard";
 
 export default function TaskList(props) {
-  const taskList = props.taskList;
 
-/*   const sumStoryPoint = taskList.reduce((accumulator, object) => {
-    return accumulator + parseInt(object.storyPoint);
-  }, 0); */
+  const [taskList, setTaskList] = useState(tasks)
 
-  const [totalPoints, setTotalPoints] = useState(0);
-
+  // bir string degişkenin integera cevrilip cevrilemeyecegini donen fonksiyon
   function isInteger(value) {
     return /^\d+$/.test(value);
   }
+
+  // task listesinin toplam storypointini dönen fonksiyon
+  const sumStoryPoint = taskList.reduce((accumulator, object) => {
+    if(isInteger(object.storyPoint)) {
+      return accumulator + parseInt(object.storyPoint);
+    } else {
+      return accumulator
+    }
+  }, 0);
+
+  const [totalPoints, setTotalPoints] = useState(sumStoryPoint);
 
   const changeTotalPoint = (oldStoryPoint, newStoryPoint) => {
     if(oldStoryPoint != null){
@@ -36,6 +43,15 @@ export default function TaskList(props) {
       }
     }
   };
+
+  const updateTaskList = (task) => {
+    setTaskList(current  => current.map(obj => {
+      if(obj.id === task.id) {
+        return {...obj, taskName: task.taskName, taskDescription: task.taskDescription, storyPoint: task.storyPoint}
+      }
+      return obj;
+    }))
+  }
 
   return (
     <div>
@@ -70,6 +86,7 @@ export default function TaskList(props) {
               key={index}
               task={task}
               changeTotalPoint={changeTotalPoint}
+              updateTaskList={updateTaskList}
             />
           );
         })}

@@ -31,35 +31,49 @@ function TaskCard(props) {
   ];
 
   const [taskName, setTaskName] = useState(props.task.taskName);
-  const [taskDescription, setTaskDescription] = useState(props.task.taskDescription);
+  const [taskDescription, setTaskDescription] = useState(
+    props.task.taskDescription
+  );
 
-  const [tempTaskName, setTempTaskName] = useState(props.task.taskName)
-  const [tempTaskDescription, setTempTaskDescription] = useState(props.task.taskDescription)
+  const [tempTaskName, setTempTaskName] = useState(taskName);
+  const [tempTaskDescription, setTempTaskDescription] = useState(taskDescription);
+
+  const [lastTask, setLastTask] = useState({
+    id: props.task.id,
+    taskName: taskName,
+    taskDescription: taskDescription,
+    storyPoint: storyPoint,
+  });
 
   const changeHandlerTaskName = (e) => {
     setTempTaskName(e.target.value);
-  }
+  };
 
   const changeHandlerTaskDescription = (e) => {
     setTempTaskDescription(e.target.value);
-  }
+  };
 
   const closeButtonDoes = () => {
-    setTempTaskName(props.task.taskName)
-    setTempTaskDescription(props.task.taskDescription)
+    setTempTaskName(taskName);
+    setTempTaskDescription(taskDescription);
     handleClose();
-  }
+  };
 
+
+  // async calısmadıgı icin iki kere save edilmesi gerekiyor
+  // duzeltilecek.
   const saveButtonDoes = () => {
-    setTaskName(tempTaskName)
-    setTaskDescription(tempTaskDescription)
+    setTaskName(tempTaskName);
+    setTaskDescription(tempTaskDescription);
     setLastTask({
       ...lastTask,
       taskName: taskName,
-      taskDescription: taskDescription
-    })
+      taskDescription: taskDescription,
+      storyPoint: storyPoint,
+    });
+    props.updateTaskList(lastTask);
     handleClose();
-  }
+  };
 
   const changeStoryPoint = (sp) => {
     props.changeTotalPoint(storyPoint, sp);
@@ -70,16 +84,13 @@ function TaskCard(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [lastTask, setLastTask] = useState({
-    id: props.task.id,
-    taskName: taskName,
-    taskDescription: taskDescription,
-    storyPoint: storyPoint
-  })
+  useEffect(
+    () => {
+      console.log("last task: ", lastTask)
+    },
+    [lastTask]
+  );
 
-  useEffect(() => console.log(taskName), [taskName]);
-
-  console.log(lastTask);
   return (
     <>
       <Container className="w-100 p-2">
