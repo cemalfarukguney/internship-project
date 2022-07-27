@@ -5,17 +5,16 @@ import tasks from "../tasks";
 import TaskCard from "./TaskCard";
 
 export default function TaskList(props) {
-
   const [taskList, setTaskList] = useState(tasks)
 
   // bir string degişkenin integera cevrilip cevrilemeyecegini donen fonksiyon
-  function isInteger(value) {
+  function isIntegerString(value) {
     return /^\d+$/.test(value);
   }
 
   // task listesinin toplam storypointini dönen fonksiyon
   const sumStoryPoint = taskList.reduce((accumulator, object) => {
-    if(isInteger(object.storyPoint)) {
+    if(isIntegerString(object.storyPoint)) {
       return accumulator + parseInt(object.storyPoint);
     } else {
       return accumulator
@@ -26,17 +25,17 @@ export default function TaskList(props) {
 
   const changeTotalPoint = (oldStoryPoint, newStoryPoint) => {
     if(oldStoryPoint != null){
-      if(isInteger(oldStoryPoint) && isInteger(newStoryPoint)){
+      if(isIntegerString(oldStoryPoint) && isIntegerString(newStoryPoint)){
         return (setTotalPoints(totalPoints + (parseInt(newStoryPoint)) - (parseInt(oldStoryPoint))))
-      } else if(isInteger(oldStoryPoint) && !isInteger(newStoryPoint)) {
+      } else if(isIntegerString(oldStoryPoint) && !isIntegerString(newStoryPoint)) {
         return (setTotalPoints(totalPoints - (parseInt(oldStoryPoint)))) 
-      } else if(!isInteger(oldStoryPoint) && isInteger(newStoryPoint)) {
+      } else if(!isIntegerString(oldStoryPoint) && isIntegerString(newStoryPoint)) {
         return(setTotalPoints(totalPoints + (parseInt(newStoryPoint))))
       } else {
         return(setTotalPoints(totalPoints))
       }
     } else {
-      if(isInteger(newStoryPoint)){
+      if(isIntegerString(newStoryPoint)){
         return(setTotalPoints(totalPoints + (parseInt(newStoryPoint))))
       } else {
         return(setTotalPoints(totalPoints))

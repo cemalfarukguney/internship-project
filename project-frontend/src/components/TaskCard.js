@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState, useEffect } from "react";
 import {
   Button,
@@ -36,7 +36,8 @@ function TaskCard(props) {
   );
 
   const [tempTaskName, setTempTaskName] = useState(taskName);
-  const [tempTaskDescription, setTempTaskDescription] = useState(taskDescription);
+  const [tempTaskDescription, setTempTaskDescription] =
+    useState(taskDescription);
 
   const [lastTask, setLastTask] = useState({
     id: props.task.id,
@@ -59,21 +60,32 @@ function TaskCard(props) {
     handleClose();
   };
 
-
   // async calısmadıgı icin iki kere save edilmesi gerekiyor
   // duzeltilecek.
-  const saveButtonDoes = () => {
+  const saveButtonDoes = useCallback(() => {
     setTaskName(tempTaskName);
     setTaskDescription(tempTaskDescription);
-    setLastTask({
+    console.log('update the last task.');
+    const newLastTask = {
       ...lastTask,
-      taskName: taskName,
-      taskDescription: taskDescription,
+      taskName: tempTaskName,
+      taskDescription: tempTaskDescription,
       storyPoint: storyPoint,
-    });
-    props.updateTaskList(lastTask);
+    };
+    setLastTask(newLastTask);
+    props.updateTaskList(newLastTask);
     handleClose();
-  };
+  }, [
+    lastTask,
+    setLastTask,
+    setTaskName,
+    taskName,
+    tempTaskName,
+    props,
+    storyPoint,
+    taskDescription,
+    tempTaskDescription,
+  ]);
 
   const changeStoryPoint = (sp) => {
     props.changeTotalPoint(storyPoint, sp);
@@ -84,12 +96,9 @@ function TaskCard(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  useEffect(
-    () => {
-      console.log("last task: ", lastTask)
-    },
-    [lastTask]
-  );
+  useEffect(() => {
+    console.log("last task: ", lastTask);
+  }, [lastTask]);
 
   return (
     <>

@@ -4,8 +4,11 @@ import Navbar from './components/Navbar';
 import MainBody from './components/MainBody';
 import {useState} from 'react';
 import { UserContext } from './UserContext';
+import tasks from './tasks';
 
 function App() {
+  const taskList = tasks;
+
   const[username, setUsername] = useState("Name");
   const[roomName, setRoomName] = useState("Room");
 
