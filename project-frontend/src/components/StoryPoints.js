@@ -1,14 +1,23 @@
-import React from "react";
-import {Dropdown, DropdownButton} from "react-bootstrap";
+import React, { useMemo } from "react";
 
-function StoryPoints() {
-  return (
-    <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-      <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-      <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-    </DropdownButton>
+const INT_REGEX = /^\d+$/;
+
+function StoryPoints({ tasks }) {
+  const total = useMemo(
+    () =>
+      tasks.reduce((acc, task) => {
+        const isIntString = task.storyPoint.match(INT_REGEX) !== null;
+
+        if (isIntString) {
+          return acc + Number(task.storyPoint);
+        }
+
+        return acc;
+      }, 0),
+    [tasks]
   );
+
+  return <>{total} points</>;
 }
 
 export default StoryPoints;

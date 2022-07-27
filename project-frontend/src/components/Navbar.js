@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useCallback, useContext} from "react";
 import {MdTask, MdKeyboardArrowDown} from 'react-icons/md';
 import {useState} from 'react';
 import {IoPersonAdd} from 'react-icons/io5'
@@ -12,11 +12,16 @@ export default function Navbar(props){
     const [{username, setUsername}, {roomName, setRoomName}] = useContext(UserContext); 
     const [isShown, setIsShown] = useState(false);
 
-    const handleClick = event => {
-        setIsShown(current => !current);
-        props.parentCallback(isShown);
-        console.log(isShown);
-    };
+    const handleClick = useCallback((event) => {
+        setIsShown(current => {
+            const newIsShown = !current;
+
+            props.parentCallback(newIsShown);
+            console.log(newIsShown);
+
+            return newIsShown;
+        });
+    });
 
     const [settingsPopup, setSettingsPopup] = useState(false);
 
