@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useState } from "react";
 import { Navbar, Container, Button, Col, Row } from "react-bootstrap";
 import tasks from "../tasks";
 import TaskCard from "./TaskCard";
 
 export default function TaskList(props) {
-  const [taskList, setTaskList] = useState(tasks)
+  const [taskList, setTaskList] = useState(tasks);
 
   // bir string degişkenin integera cevrilip cevrilemeyecegini donen fonksiyon
   function isIntegerString(value) {
@@ -13,44 +13,63 @@ export default function TaskList(props) {
   }
 
   // task listesinin toplam storypointini dönen fonksiyon
-  const sumStoryPoint = taskList.reduce((accumulator, object) => {
-    if(isIntegerString(object.storyPoint)) {
-      return accumulator + parseInt(object.storyPoint);
-    } else {
-      return accumulator
-    }
-  }, 0);
+  const sumStoryPoint = useMemo(
+    () =>
+      taskList.reduce((accumulator, object) => {
+        if (isIntegerString(object.storyPoint)) {
+          return accumulator + parseInt(object.storyPoint);
+        } else {
+          return accumulator;
+        }
+      }, 0),
+    [taskList]
+  );
 
   const [totalPoints, setTotalPoints] = useState(sumStoryPoint);
 
   const changeTotalPoint = (oldStoryPoint, newStoryPoint) => {
-    if(oldStoryPoint != null){
-      if(isIntegerString(oldStoryPoint) && isIntegerString(newStoryPoint)){
-        return (setTotalPoints(totalPoints + (parseInt(newStoryPoint)) - (parseInt(oldStoryPoint))))
-      } else if(isIntegerString(oldStoryPoint) && !isIntegerString(newStoryPoint)) {
-        return (setTotalPoints(totalPoints - (parseInt(oldStoryPoint)))) 
-      } else if(!isIntegerString(oldStoryPoint) && isIntegerString(newStoryPoint)) {
-        return(setTotalPoints(totalPoints + (parseInt(newStoryPoint))))
+    if (oldStoryPoint != null) {
+      if (isIntegerString(oldStoryPoint) && isIntegerString(newStoryPoint)) {
+        return setTotalPoints(
+          totalPoints + parseInt(newStoryPoint) - parseInt(oldStoryPoint)
+        );
+      } else if (
+        isIntegerString(oldStoryPoint) &&
+        !isIntegerString(newStoryPoint)
+      ) {
+        return setTotalPoints(totalPoints - parseInt(oldStoryPoint));
+      } else if (
+        !isIntegerString(oldStoryPoint) &&
+        isIntegerString(newStoryPoint)
+      ) {
+        return setTotalPoints(totalPoints + parseInt(newStoryPoint));
       } else {
-        return(setTotalPoints(totalPoints))
+        return setTotalPoints(totalPoints);
       }
     } else {
-      if(isIntegerString(newStoryPoint)){
-        return(setTotalPoints(totalPoints + (parseInt(newStoryPoint))))
+      if (isIntegerString(newStoryPoint)) {
+        return setTotalPoints(totalPoints + parseInt(newStoryPoint));
       } else {
-        return(setTotalPoints(totalPoints))
+        return setTotalPoints(totalPoints);
       }
     }
   };
 
   const updateTaskList = (task) => {
-    setTaskList(current  => current.map(obj => {
-      if(obj.id === task.id) {
-        return {...obj, taskName: task.taskName, taskDescription: task.taskDescription, storyPoint: task.storyPoint}
-      }
-      return obj;
-    }))
-  }
+    setTaskList((current) =>
+      current.map((obj) => {
+        if (obj.id === task.id) {
+          return {
+            ...obj,
+            taskName: task.taskName,
+            taskDescription: task.taskDescription,
+            storyPoint: task.storyPoint,
+          };
+        }
+        return obj;
+      })
+    );
+  };
 
   return (
     <div>
