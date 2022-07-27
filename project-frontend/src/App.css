@@ -57,15 +57,17 @@
 } */
 
 /* Links inside the dropdown */
-.navbar--dropdown-room-content > a {
+.navbar--dropdown-room-content > button {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  border: none;
+  width: 100%;
 }
 
 /* Change color of dropdown links on hover */
-.navbar--dropdown-room-content > a:hover {background-color: #ddd;}
+.navbar--dropdown-room-content > button:hover {background-color: #ddd;}
 
 /* Show the dropdown menu on hover */
 .navbar--dropdown-room:hover .navbar--dropdown-room-content {display: block;}
@@ -108,15 +110,17 @@
 }
 
 /* Links inside the dropdown */
-.navbar--dropdown-user-content > a {
+.navbar--dropdown-user-content > button {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  border: none;
+  width: 100%;
 }
 
 /* Change color of dropdown links on hover */
-.navbar--dropdown-user-content > a:hover {background-color: #ddd;}
+.navbar--dropdown-user-content > button:hover {background-color: #ddd;}
 
 /* Show the dropdown menu on hover */
 .navbar--dropdown-user:hover .navbar--dropdown-user-content {display: block;}
