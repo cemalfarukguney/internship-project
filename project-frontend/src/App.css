@@ -209,8 +209,8 @@
 }
 
 .card--div-button{
-  width: 64px;
-  height: 112px;
+  width: 48px;
+  height: 84px;
   background-color: whitesmoke;
   color: rgb(91, 91, 246);
   border: 1px rgb(91, 91, 246) solid;
@@ -220,8 +220,8 @@
 }
 
 .card--div-button-selected{
-  width: 64px;
-  height: 112px;
+  width: 48px;
+  height: 84px;
   background-color: rgb(91, 91, 246);
   color: whitesmoke;
   border: 1px rgb(91, 91, 246) solid;
@@ -232,6 +232,12 @@
 
 .card--div-button:hover{
   background-color: rgb(231, 231, 252);
+}
+
+.cardgrid--h3{
+  font-size: 16px;
+  padding-bottom: 5px;
+  text-align: center;
 }
 
 .cardgrid--wrapper{
@@ -246,7 +252,22 @@
 }
 
 .reveal-button--div > Button{
-  height: 60px;
-  width: 200px;
+  height: 40px;
+  width: 150px;
   font-size: larger;
+}
+
+@media screen and (max-width:800px){
+  .card--div-button{
+    width: 32px;
+    height: 56px;
+    border-radius: 6px;
+    font-size: 12px;
+  }
+  .card--div-button-selected{
+    width: 32px;
+    height: 56px;
+    border-radius: 6px;
+    font-size: 12px;
+  }
 }
