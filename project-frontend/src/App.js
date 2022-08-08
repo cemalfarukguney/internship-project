@@ -61,17 +61,6 @@ function App() {
           <Navbar parentCallback={callbackFunction}/>
           <MainBody taskState={state} />
           <CreateGameForm />
-          <div>
-            <ul>
-              {issues.map(issue => (
-                <div key = {issue.id} style={{border: "1px red solid"}}> 
-                  <h2>{issue.issueName}</h2>
-                  <h4>{issue.description}</h4>
-                  <h4>{issue.storyPoint}</h4>
-                </div>
-              ))}
-            </ul>
-          </div>
         </TaskListContext.Provider>
       </UserContext.Provider>
     </div>
