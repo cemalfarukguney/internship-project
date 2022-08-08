@@ -13,11 +13,12 @@ import CreateGameForm from './components/CreateGameForm';
 function App() {
 
   const [issues, setIssues] = useState([]);
-  const [tasks, setTasks] = useState(defaultTasks);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get('http://localhost:8080/issues');
+      setTasks(response.data);
       setIssues(response.data);
     }
     fetchData();
@@ -64,8 +65,9 @@ function App() {
             <ul>
               {issues.map(issue => (
                 <div key = {issue.id} style={{border: "1px red solid"}}> 
-                  <h2>{issue.name}</h2>
+                  <h2>{issue.issueName}</h2>
                   <h4>{issue.description}</h4>
+                  <h4>{issue.storyPoint}</h4>
                 </div>
               ))}
             </ul>

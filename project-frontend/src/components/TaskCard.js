@@ -57,7 +57,7 @@ function TaskCard(props) {
                 >
                   <CgMore />
                 </Button>
-                <Card.Title>{task.title}</Card.Title>
+                <Card.Title>{task.issueName}</Card.Title>
                 <Button variant="primary">Vote this issue</Button>
                 <DropdownButton
                   variant="dark"
@@ -107,9 +107,9 @@ function TaskCard(props) {
                   <h4>Title</h4>
                 </label>
                 <input
-                  id="title"
+                  id="issueName"
                   className="form-control"
-                  defaultValue={task.title}
+                  defaultValue={task.issueName}
                   {...register("title")}
                 />
 
