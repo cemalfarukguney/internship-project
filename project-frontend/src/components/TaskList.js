@@ -19,7 +19,7 @@ export default function TaskList(props) {
                 style={{ height: "100px" }}
               >
                 <Col sm={3}>
-                  <Navbar.Brand>Issues</Navbar.Brand>
+                  <Navbar.Brand>ISSUES</Navbar.Brand>
                 </Col>
                 <Col sm={5}>
                   <Row>
