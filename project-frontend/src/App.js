@@ -6,20 +6,17 @@ import {useCallback, useState, useEffect} from 'react';
 import axios from "axios";
 import { UserContext } from './UserContext';
 import TaskListContext from './context/TaskListContext';
-import defaultTasks from './tasks';
 import omitUndefined from './utils/omit-undefined';
 import CreateGameForm from './components/CreateGameForm';
 
 function App() {
 
-  const [issues, setIssues] = useState([]);
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get('http://localhost:8080/issues');
       setTasks(response.data);
-      setIssues(response.data);
     }
     fetchData();
   }, []);
@@ -60,7 +57,7 @@ function App() {
         <TaskListContext.Provider value={[tasks, setTasks, updateTask]}>
           <Navbar parentCallback={callbackFunction}/>
           <MainBody taskState={state} />
-          <CreateGameForm />
+          <CreateGameForm/>
         </TaskListContext.Provider>
       </UserContext.Provider>
     </div>
