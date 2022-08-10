@@ -103,7 +103,11 @@ function TaskCard(props) {
                   disabled={true}
                 />
 
-                <label className="form-label" htmlFor="title" style={{marginTop:"10px"}}>
+                <label
+                  className="form-label"
+                  htmlFor="title"
+                  style={{ marginTop: "10px" }}
+                >
                   <h4>Title</h4>
                 </label>
                 <input
@@ -113,7 +117,11 @@ function TaskCard(props) {
                   {...register("title")}
                 />
 
-                <label className="form-label" htmlFor="description" style={{marginTop:"10px"}}>
+                <label
+                  className="form-label"
+                  htmlFor="description"
+                  style={{ marginTop: "10px" }}
+                >
                   <h4>Description</h4>
                 </label>
                 <textarea
@@ -124,7 +132,11 @@ function TaskCard(props) {
                   {...register("description")}
                 ></textarea>
 
-                <label className="form-label" htmlFor="story-point" style={{marginTop:"10px"}}>
+                <label
+                  className="form-label"
+                  htmlFor="story-point"
+                  style={{ marginTop: "10px" }}
+                >
                   <h4>Story Point</h4>
                 </label>
                 <input

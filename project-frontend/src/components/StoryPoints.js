@@ -6,7 +6,8 @@ function StoryPoints({ tasks }) {
   const total = useMemo(
     () =>
       tasks.reduce((acc, task) => {
-        const isIntString = task.storyPoint.toString().match(INT_REGEX) !== null;
+        const isIntString =
+          task.storyPoint.toString().match(INT_REGEX) !== null;
 
         if (isIntString) {
           return acc + Number(task.storyPoint);
