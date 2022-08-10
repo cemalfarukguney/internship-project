@@ -37,12 +37,7 @@ export default function TaskList(props) {
               </Container>
             </Navbar>
             {tasks.map((task, index) => {
-              return (
-                <TaskCard
-                  key={task.id}
-                  task={task}
-                />
-              );
+              return <TaskCard key={task.id} task={task} />;
             })}
           </Container>
         )}
