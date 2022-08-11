@@ -9,9 +9,12 @@ import TaskListContext from './context/TaskListContext';
 import defaultTasks from './tasks';
 import omitUndefined from './utils/omit-undefined';
 import CreateGameForm from './components/CreateGameForm';
+import EnterName from './components/EnterName';
+//import defaultTasks from './tasks'
 
 function App() {
 
+  const [open, setOpen] = useState(true)
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {

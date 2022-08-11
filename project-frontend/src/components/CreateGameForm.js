@@ -5,6 +5,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 export default function CreateGameForm() {
   const [show, setShow] = useState(false);
   const [randomString, setRandomString] = useState('');
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
