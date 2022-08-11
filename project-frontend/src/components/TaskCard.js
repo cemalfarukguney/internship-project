@@ -1,10 +1,11 @@
-import React from "react";
-import { useState } from "react";
+import React, { useCallback } from "react";
+import { useState, useEffect } from "react";
 import {
   Button,
   Card,
   Container,
   Modal,
+  Form,
   Dropdown,
   DropdownButton,
 } from "react-bootstrap";
@@ -17,7 +18,9 @@ function TaskCard(props) {
   const { task } = props;
   const { storyPoint } = task;
   const {
+    handleSubmit,
     register,
+    formState: { errors },
   } = useForm();
   const [show, setShow] = useState(false);
   const storyPoints = [
@@ -112,7 +115,6 @@ function TaskCard(props) {
                   className="form-control"
                   defaultValue={task.issueName}
                   {...register("title")}
-                  disabled={true}
                 />
 
                 <label
@@ -128,7 +130,6 @@ function TaskCard(props) {
                   defaultValue={task.description}
                   rows={3}
                   {...register("description")}
-                  disabled={true}
                 ></textarea>
 
                 <label
@@ -151,7 +152,7 @@ function TaskCard(props) {
               <Button variant="secondary" onClick={() => setShow(false)}>
                 Close
               </Button>
-{/*               <Button
+              <Button
                 variant="primary"
                 onClick={handleSubmit((vals) => {
                   updateTask(task.id, vals);
@@ -159,7 +160,7 @@ function TaskCard(props) {
                 })}
               >
                 Save Changes
-              </Button> */}
+              </Button>
             </Modal.Footer>
           </Modal>
         </>
