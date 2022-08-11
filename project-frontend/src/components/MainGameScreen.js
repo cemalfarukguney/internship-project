@@ -7,17 +7,18 @@ import TaskListContext from "../context/TaskListContext";
 import omitUndefined from "../utils/omit-undefined";
 
 function MainGameScreen() {
-  const [issues, setIssues] = useState([]);
+  //const [issues, setIssues] = useState([]);
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("http://localhost:8080/issues");
       setTasks(response.data);
-      setIssues(response.data);
     };
     fetchData();
   }, []);
+
+  console.log(tasks)
 
   const [state, setState] = useState(false);
 
