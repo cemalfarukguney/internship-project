@@ -3,6 +3,7 @@ import { useState, useContext, useRef } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
+import axios from "axios";
 
 function JoinGameForm() {
   const [show, setShow] = useState(false);
@@ -10,7 +11,22 @@ function JoinGameForm() {
   const handleShow = () => setShow(true);
   const roomIdRef = useRef(null);
 
-  function handleJoin() {}
+  const {username, setUsername} = useContext(UserContext)[0];
+
+  const [gameId, setGameId] = useState([]);
+  const [userId, setUserId] = useState([]);
+
+  const handleJoin = () => {
+    const fetchData = async () => {
+      const response = await axios.get(`http://localhost:8080/joinGame/${roomIdRef.current.value}/${username}`);
+      setGameId(response.data[0]);
+      setUserId(response.date[1]);
+    };
+    fetchData();
+  }
+
+  //console.log("room id: ", roomIdRef);
+  //console.log("username: ", username);
 
   return (
     <div>

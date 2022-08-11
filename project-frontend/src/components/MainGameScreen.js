@@ -18,7 +18,7 @@ function MainGameScreen() {
     fetchData();
   }, []);
 
-  console.log(tasks)
+  //console.log(tasks)
 
   const [state, setState] = useState(false);
 

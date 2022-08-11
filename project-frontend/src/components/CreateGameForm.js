@@ -3,7 +3,9 @@ import { useState, useContext, useRef } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
-import axios from 'axios';
+import axios from "axios";
+import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
 
 export default function CreateGameForm() {
   const [show, setShow] = useState(false);
@@ -11,21 +13,49 @@ export default function CreateGameForm() {
   const handleShow = () => setShow(true);
   const roomNameRef = useRef(null);
 
-  const {username, setUsername} = useContext(UserContext)[0];
-  const {roomName, setRoomName} = useContext(UserContext)[1];
+  const { username, setUsername } = useContext(UserContext)[0];
+  const { roomName, setRoomName } = useContext(UserContext)[1];
 
+  const [userId, setUserId] = useState();
+  const [gameId, setGameId] = useState();
 
-  function handleCreate() {
-    setRoomName(roomNameRef.current.value);
-    axios.post(`http://localhost:8080/createGame/${username}`, {
-      userName: username
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
+  let stompClient;
+
+  function connectToSocket(gameId) {
+    console.log("connecting to the game");
+    let socket = new SockJS("http://localhost:8080/gameplay");
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+      console.log("connected to the frame: " + frame);
+      stompClient.subscribe("/topic/game-progress/" + gameId, function (response) {
+        let data = JSON.parse(response.body);
+        //console.log(data);
+      });
     });
+  }
+
+  function callData(){
+    axios.get(`http://localhost:8080/callData/32`)
+  }
+
+  async function handleCreate(callback) {
+    setRoomName(roomNameRef.current.value);
+    await axios
+      .post(`http://localhost:8080/createGame/${username}`, {
+        userName: username,
+      })
+      .then(function (response) {
+        console.log(response.data)
+        console.log("game id: ", response.data.gameId)
+        setUserId(response.data.userId);
+        setGameId(response.data.gameId);
+        connectToSocket(response.data.gameId);
+        console.log(username)
+        callback();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (
@@ -51,7 +81,7 @@ export default function CreateGameForm() {
         </Modal.Body>
         <Modal.Footer>
           <Link to="/game">
-            <Button variant="primary" onClick={handleCreate}>
+            <Button variant="primary" onClick={() => handleCreate(callData)}>
               Create
             </Button>
           </Link>
