@@ -42,7 +42,7 @@ export default function Navbar(props) {
     setInvitationPopup((current) => !current);
   };
 
-  const [changeUsernamePopup, setChangeUsernamePopup] = useState(true);
+  const [changeUsernamePopup, setChangeUsernamePopup] = useState(false);
 
   const changeUsernameClick = (event) => {
     setChangeUsernamePopup((current) => !current);
