@@ -1,23 +1,78 @@
 import React, { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
 import Card from "./Card";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../context/UserContext";
 
 function CardGrid(props) {
   const [selectedCard, setSelectedCard] = useState(-1);
   const [{ username, setUsername }] = useContext(UserContext);
   var cards = [
-    <Card key="0" number={0} selectCard={setSelectedCard} selectedNo={selectedCard} />,
-    <Card key="1"number={1} selectCard={setSelectedCard} selectedNo={selectedCard} />,
-    <Card key="2"number={2} selectCard={setSelectedCard} selectedNo={selectedCard} />,
-    <Card key="3"number={3} selectCard={setSelectedCard} selectedNo={selectedCard} />,
-    <Card key="5"number={5} selectCard={setSelectedCard} selectedNo={selectedCard} />,
-    <Card key="8"number={8} selectCard={setSelectedCard} selectedNo={selectedCard} />,
-    <Card key="13"number={13} selectCard={setSelectedCard} selectedNo={selectedCard} />,
-    <Card key="21"number={21} selectCard={setSelectedCard} selectedNo={selectedCard} />,
-    <Card key="34"number={34} selectCard={setSelectedCard} selectedNo={selectedCard} />,
-    <Card key="55"number={55} selectCard={setSelectedCard} selectedNo={selectedCard} />,
-    <Card key="89"number={89} selectCard={setSelectedCard} selectedNo={selectedCard} />,
+    <Card
+      key="0"
+      number={0}
+      selectCard={setSelectedCard}
+      selectedNo={selectedCard}
+    />,
+    <Card
+      key="1"
+      number={1}
+      selectCard={setSelectedCard}
+      selectedNo={selectedCard}
+    />,
+    <Card
+      key="2"
+      number={2}
+      selectCard={setSelectedCard}
+      selectedNo={selectedCard}
+    />,
+    <Card
+      key="3"
+      number={3}
+      selectCard={setSelectedCard}
+      selectedNo={selectedCard}
+    />,
+    <Card
+      key="5"
+      number={5}
+      selectCard={setSelectedCard}
+      selectedNo={selectedCard}
+    />,
+    <Card
+      key="8"
+      number={8}
+      selectCard={setSelectedCard}
+      selectedNo={selectedCard}
+    />,
+    <Card
+      key="13"
+      number={13}
+      selectCard={setSelectedCard}
+      selectedNo={selectedCard}
+    />,
+    <Card
+      key="21"
+      number={21}
+      selectCard={setSelectedCard}
+      selectedNo={selectedCard}
+    />,
+    <Card
+      key="34"
+      number={34}
+      selectCard={setSelectedCard}
+      selectedNo={selectedCard}
+    />,
+    <Card
+      key="55"
+      number={55}
+      selectCard={setSelectedCard}
+      selectedNo={selectedCard}
+    />,
+    <Card
+      key="89"
+      number={89}
+      selectCard={setSelectedCard}
+      selectedNo={selectedCard}
+    />,
     <Card
       key="?"
       number={"?"}

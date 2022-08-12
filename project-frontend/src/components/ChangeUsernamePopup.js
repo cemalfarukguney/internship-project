@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Form, CloseButton, Button, Modal, Alert } from "react-bootstrap";
 import { useContext } from "react";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../context/UserContext";
 
 function ChangeUsernamePopup(props) {
   const { username, setUsername } = useContext(UserContext)[0];
@@ -23,7 +23,7 @@ function ChangeUsernamePopup(props) {
           <Form.Control
             ref={userRef}
             type="text"
-            defaultValue={username}
+            placeholder={username}
           ></Form.Control>
         </Form.Group>
         {props.children}

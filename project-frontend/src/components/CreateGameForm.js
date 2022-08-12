@@ -2,10 +2,10 @@ import React from "react";
 import { useState, useContext, useRef } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../context/UserContext";
 import axios from "axios";
-import * as SockJS from 'sockjs-client';
-import * as Stomp from 'stompjs';
+import * as SockJS from "sockjs-client";
+import * as Stomp from "stompjs";
 
 export default function CreateGameForm() {
   const [show, setShow] = useState(false);
@@ -16,8 +16,8 @@ export default function CreateGameForm() {
   const { username, setUsername } = useContext(UserContext)[0];
   const { roomName, setRoomName } = useContext(UserContext)[1];
 
-  const [userId, setUserId] = useState();
-  const [gameId, setGameId] = useState();
+  const [userId, setUserId] = useState(0);
+  const [gameId, setGameId] = useState(0);
 
   let stompClient;
 
@@ -27,15 +27,19 @@ export default function CreateGameForm() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
       console.log("connected to the frame: " + frame);
-      stompClient.subscribe("/topic/game-progress/" + gameId, function (response) {
-        let data = JSON.parse(response.body);
-        //console.log(data);
-      });
+      stompClient.subscribe(
+        "/topic/game-progress/" + gameId,
+        function (response) {
+          let data = JSON.parse(response.body);
+          //console.log(data);
+        }
+      );
     });
   }
 
-  function callData(){
-    axios.get(`http://localhost:8080/callData/32`)
+  function callData(id) {
+    console.log(gameId);
+    axios.get(`http://localhost:8080/callData/${id}`);
   }
 
   async function handleCreate(callback) {
@@ -45,13 +49,12 @@ export default function CreateGameForm() {
         userName: username,
       })
       .then(function (response) {
-        console.log(response.data)
-        console.log("game id: ", response.data.gameId)
+        console.log(response.data);
+        console.log("game id: ", response.data.gameId);
         setUserId(response.data.userId);
         setGameId(response.data.gameId);
         connectToSocket(response.data.gameId);
-        console.log(username)
-        callback();
+        callback(response.data.gameId);
       })
       .catch(function (error) {
         console.log(error);

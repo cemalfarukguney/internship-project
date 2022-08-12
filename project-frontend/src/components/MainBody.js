@@ -6,10 +6,9 @@ import axios from "axios";
 import { Card } from "react-bootstrap";
 
 export default function MainBody(props) {
-
   const sendToConsole = () => {
-    axios.get(`http://localhost:8080/callData/29`)
-  }
+    axios.get(`http://localhost:8080/callData/1`);
+  };
 
   return (
     <div className="main--div">

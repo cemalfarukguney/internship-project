@@ -2,8 +2,10 @@ import React from "react";
 import { useState, useContext, useRef } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../context/UserContext";
 import axios from "axios";
+import * as SockJS from "sockjs-client";
+import * as Stomp from "stompjs";
 
 function JoinGameForm() {
   const [show, setShow] = useState(false);
@@ -11,20 +13,55 @@ function JoinGameForm() {
   const handleShow = () => setShow(true);
   const roomIdRef = useRef(null);
 
-  const {username, setUsername} = useContext(UserContext)[0];
+  let stompClient;
 
-  const [gameId, setGameId] = useState([]);
-  const [userId, setUserId] = useState([]);
+  const { username, setUsername } = useContext(UserContext)[0];
 
-  const handleJoin = () => {
-    const fetchData = async () => {
-      const response = await axios.get(`http://localhost:8080/joinGame/${roomIdRef.current.value}/${username}`);
-      setGameId(response.data[0]);
-      setUserId(response.date[1]);
-    };
-    fetchData();
+  const [gameId, setGameId] = useState(0);
+  const [userId, setUserId] = useState(0);
+
+  function connectToSocket(gameId) {
+    console.log("connecting to the game");
+    let socket = new SockJS("http://localhost:8080/gameplay");
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+      console.log("connected to the frame: " + frame);
+      stompClient.subscribe(
+        "/topic/game-progress/" + gameId,
+        function (response) {
+          let data = JSON.parse(response.body);
+          //console.log(data);
+        }
+      );
+    });
   }
 
+  function callData(id) {
+    axios.get(`http://localhost:8080/callData/${id}`);
+  }
+
+  async function handleJoin(callback) {
+    // setGameId(roomIdRef.current.value);
+    await axios
+      .get(
+        `http://localhost:8080/joinGame/${roomIdRef.current.value}/${username}`,
+        {
+          userName: username,
+        }
+      )
+      .then(function (response) {
+        console.log(response.data);
+        console.log("game id: ", response.data.gameId);
+        setUserId(response.data.userId);
+        setGameId(response.data.gameId);
+        connectToSocket(response.data.gameId);
+        console.log(username);
+        callback(response.data.gameId);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   //console.log("room id: ", roomIdRef);
   //console.log("username: ", username);
 
@@ -50,7 +87,7 @@ function JoinGameForm() {
         </Modal.Body>
         <Modal.Footer>
           <Link to="/game">
-            <Button variant="primary" onClick={handleJoin}>
+            <Button variant="primary" onClick={() => handleJoin(callData)}>
               Join
             </Button>
           </Link>

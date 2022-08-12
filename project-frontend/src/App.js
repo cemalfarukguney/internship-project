@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { UserContext } from "./UserContext";
+import { UserContext } from "./context/UserContext";
 import MainGameScreen from "./components/MainGameScreen";
 import Home from "./components/Home";
 

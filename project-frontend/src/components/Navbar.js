@@ -5,7 +5,7 @@ import { IoPersonAdd } from "react-icons/io5";
 import SettingsPopup from "./SettingsPopup";
 import HistoryPopup from "./HistoryPopup";
 import InvitationPopup from "./InvitationPopup";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../context/UserContext";
 import ChangeUsernamePopup from "./ChangeUsernamePopup";
 
 export default function Navbar(props) {
@@ -18,7 +18,6 @@ export default function Navbar(props) {
       const newIsShown = !current;
 
       props.parentCallback(newIsShown);
-      console.log(newIsShown);
 
       return newIsShown;
     });

@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from "react";
 import { Form, CloseButton, Button, Modal } from "react-bootstrap";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../context/UserContext";
 
 function SettingsPopup(props) {
   const roomNameRef = useRef(null);
