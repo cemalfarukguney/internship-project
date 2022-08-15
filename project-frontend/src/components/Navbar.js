@@ -7,6 +7,7 @@ import HistoryPopup from "./HistoryPopup";
 import InvitationPopup from "./InvitationPopup";
 import { UserContext } from "../context/UserContext";
 import ChangeUsernamePopup from "./ChangeUsernamePopup";
+import axios from "axios";
 
 export default function Navbar(props) {
   const [{ username, setUsername }, { roomName, setRoomName }] =
@@ -47,6 +48,17 @@ export default function Navbar(props) {
     setChangeUsernamePopup((current) => !current);
   };
 
+  async function getInfo() {
+    const userId = localStorage.getItem("token");
+    console.log(`trying:   http://localhost:8080/user/${userId}`);
+    await axios
+      .get(`http://localhost:8080/user/${userId}`)
+      .then(function (response) {
+        setUsername(response.data.name);
+        setRoomName(response.data.inGame.gameName);
+      });
+  }
+  getInfo();
   return (
     <nav className="navbar--div">
       <a href="/">

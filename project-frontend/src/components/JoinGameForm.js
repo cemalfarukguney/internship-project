@@ -6,6 +6,7 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
+import { updateGameState } from "./MainBody";
 
 function JoinGameForm() {
   const [show, setShow] = useState(false);
@@ -16,6 +17,7 @@ function JoinGameForm() {
   let stompClient;
 
   const { username, setUsername } = useContext(UserContext)[0];
+  const { updated, setUpdated } = useContext(UserContext)[2];
 
   const [gameId, setGameId] = useState(0);
   const [userId, setUserId] = useState(0);
@@ -30,6 +32,8 @@ function JoinGameForm() {
         "/topic/game-progress/" + gameId,
         function (response) {
           let data = JSON.parse(response.body);
+          updateGameState(response);
+          setUpdated((prev) => !prev);
           //console.log(data);
         }
       );
@@ -54,9 +58,13 @@ function JoinGameForm() {
         console.log("game id: ", response.data.gameId);
         setUserId(response.data.userId);
         setGameId(response.data.gameId);
+        const token = response.data.userId;
+        localStorage.clear();
+        localStorage.setItem("token", token);
+        console.log("Token saved: " + token);
         connectToSocket(response.data.gameId);
         console.log(username);
-        callback(response.data.gameId);
+        // callback(response.data.gameId);
       })
       .catch(function (error) {
         console.log(error);

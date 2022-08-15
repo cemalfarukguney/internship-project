@@ -6,6 +6,8 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
+import { updateGameState } from "./MainBody";
+import { updateVoterState } from "./CardGrid";
 
 export default function CreateGameForm() {
   const [show, setShow] = useState(false);
@@ -15,6 +17,7 @@ export default function CreateGameForm() {
 
   const { username, setUsername } = useContext(UserContext)[0];
   const { roomName, setRoomName } = useContext(UserContext)[1];
+  const { updated, setUpdated } = useContext(UserContext)[2];
 
   const [userId, setUserId] = useState(0);
   const [gameId, setGameId] = useState(0);
@@ -31,28 +34,50 @@ export default function CreateGameForm() {
         "/topic/game-progress/" + gameId,
         function (response) {
           let data = JSON.parse(response.body);
-          //console.log(data);
+          console.log("Mesaj!!!!!?_");
+          console.log("DATA: " + data);
+          let voters = data.users.map((a) => a.name);
+          // let doneVoters = data.users.map(())
+          let doneVoters = [];
+          updateVoterState(voters, doneVoters);
+          console.log("USERNAME: " + voters);
+          updateGameState(response);
+          setUpdated((prev) => !prev);
         }
       );
     });
   }
 
+  let saveResponse;
+
   function callData(id) {
     console.log(gameId);
     axios.get(`http://localhost:8080/callData/${id}`);
+    setGameId(saveResponse.data.gameId);
+    setUserId(saveResponse.data.userId);
+  }
+
+  function changeRoomName() {
+    console.log("Yazan" + roomNameRef.current.value);
   }
 
   async function handleCreate(callback) {
     setRoomName(roomNameRef.current.value);
     await axios
-      .post(`http://localhost:8080/createGame/${username}/oyun`, {
-        userName: username,
-      })
+      .post(
+        `http://localhost:8080/createGame/${username}/${roomNameRef.current.value}`,
+        {
+          userName: username,
+        }
+      )
       .then(function (response) {
         console.log(response.data);
         console.log("game id: ", response.data.gameId);
-        setUserId(response.data.userId);
-        setGameId(response.data.gameId);
+        const token = response.data.userId;
+        localStorage.clear();
+        localStorage.setItem("token", token);
+        console.log("Token saved: " + token);
+        saveResponse = response;
         connectToSocket(response.data.gameId);
         callback(response.data.gameId);
       })
@@ -67,7 +92,7 @@ export default function CreateGameForm() {
         Create New Game
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">

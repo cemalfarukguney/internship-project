@@ -5,8 +5,9 @@ import { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 import TaskListContext from "../context/TaskListContext";
 import omitUndefined from "../utils/omit-undefined";
+import { Navigate } from "react-router-dom";
 
-function MainGameScreen() {
+function MainGameScreen(props) {
   //const [issues, setIssues] = useState([]);
   const [tasks, setTasks] = useState([]);
 
@@ -46,6 +47,17 @@ function MainGameScreen() {
     },
     [tasks, setTasks]
   );
+
+  async function getGameState() {
+    const userId = localStorage.getItem("token");
+    await axios
+      .get(`http://localhost:8080/user/${userId}`)
+      .then(function (response) {
+        // setGameState(response.data.inGame.gameStatus);
+        console.log(response.data);
+      });
+  }
+  getGameState();
   return (
     <div className="main-game-screen">
       <TaskListContext.Provider value={[tasks, setTasks, updateTask]}>

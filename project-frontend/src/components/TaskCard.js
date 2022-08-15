@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 
 import { CgMore } from "react-icons/cg";
 import TaskListContext from "../context/TaskListContext";
+import axios from "axios";
 
 function TaskCard(props) {
   const { task } = props;
@@ -40,7 +41,30 @@ function TaskCard(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  let gameId;
+  async function fetchData() {
+    const userId = localStorage.getItem("token");
+    await axios
+      .get(`http://localhost:8080/user/${userId}`)
+      .then(function (response) {
+        gameId = response.data.inGame.id;
+        console.log(response.data.inGame.id);
+      });
+  }
 
+  async function handleVoteIssue() {
+    console.log("select issue");
+    console.log("task id: " + task.id);
+    await axios
+      .get(`http://localhost:8080/selectIssue/${gameId}/${task.id}`, {})
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  fetchData();
   return (
     <TaskListContext.Consumer>
       {([, , updateTask]) => (
@@ -58,7 +82,9 @@ function TaskCard(props) {
                   <CgMore />
                 </Button>
                 <Card.Title>{task.issueName}</Card.Title>
-                <Button variant="primary">Vote this issue</Button>
+                <Button variant="primary" onClick={() => handleVoteIssue()}>
+                  Vote this issue
+                </Button>
                 <DropdownButton
                   variant="dark"
                   className="float-end"

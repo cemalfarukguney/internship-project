@@ -1,11 +1,26 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Card from "./Card";
 import { UserContext } from "../context/UserContext";
 
-function CardGrid(props) {
+let gameState = "";
+let voters = [];
+let doneVoters = [];
+
+export function updateVoterState(votersResponse, doneVotersResponse) {
+  voters = votersResponse;
+  doneVoters = doneVotersResponse;
+  console.log("VOTERS: " + voters);
+  console.log("DONE VOTERS: " + doneVoters);
+}
+
+function CardGrid() {
   const [selectedCard, setSelectedCard] = useState(-1);
   const [{ username, setUsername }] = useContext(UserContext);
+  const [voterState, setVoterState] = useState([]);
+  const [doneVoterState, setDoneVoterState] = useState([]);
+  const { updated, setUpdated } = useContext(UserContext)[2];
+
   var cards = [
     <Card
       key="0"
@@ -81,11 +96,30 @@ function CardGrid(props) {
     />,
   ];
 
+  async function someAsyncFnc() {
+    await 1;
+  }
+  let isMounted = false;
+
+  useEffect(() => {
+    console.log("in useEffect");
+    if (isMounted) {
+      setVoterState(voters);
+      setDoneVoterState(doneVoters);
+      console.log("state changed ");
+    }
+  }, [updated]);
+
   return (
     <div className="cardgrid--wrapper">
+      {(isMounted = true)}
       <h3 className="cardgrid--h3">Dear {username},</h3>
       <div>
-        <h3 className="cardgrid--h3">Please choose your cards!</h3>
+        {voterState.map((voter) => (
+          <h3>{voter}</h3>
+        ))}
+        {/* <h3 className="cardgrid--h3">Please choose your cards!</h3> */}
+        <h3 className="cardgrid--h3"></h3>
       </div>
       <div className="cardgrid--div">{cards}</div>
       <div className="reveal-button--div">

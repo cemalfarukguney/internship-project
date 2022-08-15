@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { UserContext } from "./context/UserContext";
 import MainGameScreen from "./components/MainGameScreen";
 import Home from "./components/Home";
@@ -9,12 +9,21 @@ import Home from "./components/Home";
 function App() {
   const [username, setUsername] = useState("Name");
   const [roomName, setRoomName] = useState("Room");
+  const [updated, setUpdated] = useState(false);
+
+  function hasJwt() {
+    let flag = false;
+    localStorage.getItem("token") ? (flag = true) : (flag = false);
+    return flag;
+  }
+
   return (
     <div className="App">
       <UserContext.Provider
         value={[
           { username, setUsername },
           { roomName, setRoomName },
+          { updated, setUpdated },
         ]}
       >
         <BrowserRouter>
