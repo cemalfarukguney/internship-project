@@ -45,7 +45,7 @@ export default function CreateGameForm() {
   async function handleCreate(callback) {
     setRoomName(roomNameRef.current.value);
     await axios
-      .post(`http://localhost:8080/createGame/${username}`, {
+      .post(`http://localhost:8080/createGame/${username}/oyun`, {
         userName: username,
       })
       .then(function (response) {
