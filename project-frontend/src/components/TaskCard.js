@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import {
   Button,
@@ -10,6 +10,7 @@ import {
   DropdownButton,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { UserContext } from "../context/UserContext";
 
 import { CgMore } from "react-icons/cg";
 import TaskListContext from "../context/TaskListContext";
@@ -18,6 +19,7 @@ import axios from "axios";
 function TaskCard(props) {
   const { task } = props;
   const { storyPoint } = task;
+  const { selectedIssue, setSelectedIssue } = useContext(UserContext)[4]
   const {
     handleSubmit,
     register,
@@ -59,6 +61,7 @@ function TaskCard(props) {
       .get(`http://localhost:8080/selectIssue/${gameId}/${task.id}`, {})
       .then(function (response) {
         console.log(response);
+        setSelectedIssue(1);
       })
       .catch(function (error) {
         console.log(error);

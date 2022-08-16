@@ -1,6 +1,22 @@
-import React from "react";
+import React, {useState, useContext} from "react";
+import axios from 'axios';
+import { UserContext } from "../context/UserContext";
 
 function Card(props) {
+
+  const {gameId, setGameId} = useContext(UserContext)[3]
+  const {selectedIssue, setSelectedIssue} = useContext(UserContext)[4]
+  const userId = localStorage.getItem("token");
+
+/*   async function getInfo() {
+    //console.log(`trying:   http://localhost:8080/user/${userId}`);
+    await axios
+      .get(`http://localhost:8080/user/${userId}`)
+      .then(function (response) {
+        setSelectedIssue(response.data.inGame.selectedIssue);
+      });
+  } */
+
   return (
     <div className="card--div">
       {props.selectedNo !== props.number && (
@@ -8,7 +24,7 @@ function Card(props) {
           className="card--div-button"
           onClick={() => {
             props.selectCard(props.number);
-            props.onClick(props.number);
+            props.onClick(gameId, selectedIssue, userId, props.number);
           }}
         >
           {props.number}

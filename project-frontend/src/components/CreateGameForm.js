@@ -20,6 +20,7 @@ export default function CreateGameForm() {
   const { roomName, setRoomName } = useContext(UserContext)[1];
   const { updated, setUpdated } = useContext(UserContext)[2];
   const { gameId, setGameId } = useContext(UserContext)[3];
+  const { selectedIssue, setSelectedIssue } = useContext(UserContext)[4]
 
   const [userId, setUserId] = useState(0);
 
@@ -44,7 +45,9 @@ export default function CreateGameForm() {
           updateVoterState(voters, doneVoters);
           console.log("USERNAME: " + voters);
           updateGameState(data.game.gameStatus);
+          setSelectedIssue(data.game.selectedIssue.id);
           setUpdated((prev) => !prev);
+          console.log("ISSUE POINTS:", data.issuePoints)
         }
       );
     });

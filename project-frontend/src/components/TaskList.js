@@ -1,12 +1,14 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { Navbar, Container, Button, Col, Row } from "react-bootstrap";
 import TaskCard from "./TaskCard";
 import TaskListContext from "../context/TaskListContext";
 import StoryPoints from "./StoryPoints";
 import axios from "axios";
+import { UserContext } from "../context/UserContext";
 
 export default function TaskList(props) {
   const [points, setPoints] = useState([]);
+  const { selectedIssue, setSelectedIssue } = useContext(UserContext)[4]
 
   async function handleCreate() {
     await axios
@@ -26,15 +28,19 @@ export default function TaskList(props) {
 
   async function voteIssue() {
     axios.get(`http://localhost:8080/selectIssue/1/1`);
+    setSelectedIssue(1);
+    console.log("1. issue selectted")
   }
 
   async function revealCard() {
     axios.get(`http://localhost:8080/revealCards/1`);
+    
   }
 
   async function twoPoint() {
     await axios
-      .post(`http://localhost:8080/addPoint/1/1/2`, {
+      .post(`http://localhost:8080/addPoint/1/1/2/2`, {
+        gameId: 1,
         issueId: 1,
         userId: 1,
         point: 2,

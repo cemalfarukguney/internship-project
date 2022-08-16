@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Card from "./Card";
 import { UserContext } from "../context/UserContext";
+import axios from 'axios';
 
 let gameState = "";
 let voters = [];
@@ -41,6 +42,19 @@ function CardGrid() {
     console.log("card number: ", sp)
   }
 
+  async function addPointToIssue(gameId, issueId, userId, point) {
+    await axios
+      .post(`http://localhost:8080/addPoint/${gameId}/${issueId}/${userId}/${point}`, {})
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    console.log(`${userId} id'li kullanıcı ${issueId} id'li issue'ya ${point} puan verdi.`);
+  }
+
   var cards = [];
 
   {storyPoints.map((storyPoint, index) => {
@@ -48,7 +62,7 @@ function CardGrid() {
                   number={storyPoint}       
                   selectCard={setSelectedCard}
                   selectedNo={selectedCard}
-                  onClick={printCardNumber}/>)
+                  onClick={addPointToIssue}/>)
   })}
 
  /*  var cards = [
