@@ -8,6 +8,7 @@ import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
 import { updateGameState } from "./MainBody";
 import { updateVoterState } from "./CardGrid";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateGameForm() {
   const [show, setShow] = useState(false);
@@ -23,6 +24,7 @@ export default function CreateGameForm() {
   const [gameId, setGameId] = useState(0);
 
   let stompClient;
+  const navigate = useNavigate();
 
   function connectToSocket(gameId) {
     console.log("connecting to the game");
@@ -41,7 +43,7 @@ export default function CreateGameForm() {
           let doneVoters = [];
           updateVoterState(voters, doneVoters);
           console.log("USERNAME: " + voters);
-          updateGameState(response);
+          updateGameState(data.game.gameStatus);
           setUpdated((prev) => !prev);
         }
       );
@@ -81,6 +83,9 @@ export default function CreateGameForm() {
         connectToSocket(response.data.gameId);
         callback(response.data.gameId);
       })
+      .then(function () {
+        navigate("/game");
+      })
       .catch(function (error) {
         console.log(error);
       });
@@ -108,11 +113,9 @@ export default function CreateGameForm() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Link to="/game">
-            <Button variant="primary" onClick={() => handleCreate(callData)}>
-              Create
-            </Button>
-          </Link>
+          <Button variant="primary" onClick={() => handleCreate(callData)}>
+            Create
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

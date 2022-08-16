@@ -48,16 +48,6 @@ function MainGameScreen(props) {
     [tasks, setTasks]
   );
 
-  async function getGameState() {
-    const userId = localStorage.getItem("token");
-    await axios
-      .get(`http://localhost:8080/user/${userId}`)
-      .then(function (response) {
-        // setGameState(response.data.inGame.gameStatus);
-        console.log(response.data);
-      });
-  }
-  getGameState();
   return (
     <div className="main-game-screen">
       <TaskListContext.Provider value={[tasks, setTasks, updateTask]}>
