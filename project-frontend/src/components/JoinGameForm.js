@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
@@ -7,6 +7,8 @@ import axios from "axios";
 import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
 import { updateGameState } from "./MainBody";
+import { updateVoterState } from "./CardGrid";
+import { useNavigate } from "react-router-dom";
 
 function JoinGameForm() {
   const [show, setShow] = useState(false);
@@ -15,12 +17,14 @@ function JoinGameForm() {
   const roomIdRef = useRef(null);
 
   let stompClient;
+  const navigate = useNavigate();
 
   const { username, setUsername } = useContext(UserContext)[0];
   const { updated, setUpdated } = useContext(UserContext)[2];
 
   const [gameId, setGameId] = useState(0);
   const [userId, setUserId] = useState(0);
+  // const [done, setDone] = useState(false);
 
   function connectToSocket(gameId) {
     console.log("connecting to the game");
@@ -32,7 +36,11 @@ function JoinGameForm() {
         "/topic/game-progress/" + gameId,
         function (response) {
           let data = JSON.parse(response.body);
-          updateGameState(response);
+          let voters = data.users.map((a) => a.name);
+          let doneVoters = [];
+          updateVoterState(voters, doneVoters);
+          updateGameState(data.game.gameStatus);
+
           setUpdated((prev) => !prev);
           //console.log(data);
         }
@@ -64,14 +72,14 @@ function JoinGameForm() {
         console.log("Token saved: " + token);
         connectToSocket(response.data.gameId);
         console.log(username);
-        // callback(response.data.gameId);
+      })
+      .then(function () {
+        navigate("/game");
       })
       .catch(function (error) {
         console.log(error);
       });
   }
-  //console.log("room id: ", roomIdRef);
-  //console.log("username: ", username);
 
   return (
     <div>
@@ -94,11 +102,14 @@ function JoinGameForm() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Link to="/game">
-            <Button variant="primary" onClick={() => handleJoin(callData)}>
-              Join
-            </Button>
-          </Link>
+          <Button
+            variant="primary"
+            onClick={() => {
+              handleJoin(callData);
+            }}
+          >
+            Join
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

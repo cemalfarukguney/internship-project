@@ -58,7 +58,7 @@ function MainGameScreen(props) {
       });
   }
   getGameState();
-  
+
   return (
     <div className="main-game-screen">
       <TaskListContext.Provider value={[tasks, setTasks, updateTask]}>
