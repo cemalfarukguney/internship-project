@@ -6,7 +6,10 @@ function Card(props) {
       {props.selectedNo !== props.number && (
         <button
           className="card--div-button"
-          onClick={() => props.selectCard(props.number)}
+          onClick={() => {
+            props.selectCard(props.number);
+            props.onClick(props.number);
+          }}
         >
           {props.number}
         </button>
@@ -14,7 +17,10 @@ function Card(props) {
       {props.selectedNo === props.number && (
         <button
           className="card--div-button-selected"
-          onClick={() => props.selectCard(props.number)}
+          onClick={() => {
+            props.selectCard(props.number);
+            props.onClick(props.number);
+          }}
         >
           {props.number}
         </button>

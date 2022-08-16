@@ -21,7 +21,37 @@ function CardGrid() {
   const [doneVoterState, setDoneVoterState] = useState([]);
   const { updated, setUpdated } = useContext(UserContext)[2];
 
-  var cards = [
+    const storyPoints = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "5",
+    "8",
+    "13",
+    "21",
+    "34",
+    "55",
+    "89",
+    "?",
+
+  ];
+
+  const printCardNumber = (sp) => {
+    console.log("card number: ", sp)
+  }
+
+  var cards = [];
+
+  {storyPoints.map((storyPoint, index) => {
+    cards.push(<Card  key={index} 
+                  number={storyPoint}       
+                  selectCard={setSelectedCard}
+                  selectedNo={selectedCard}
+                  onClick={printCardNumber}/>)
+  })}
+
+ /*  var cards = [
     <Card
       key="0"
       number={0}
@@ -94,7 +124,7 @@ function CardGrid() {
       selectCard={setSelectedCard}
       selectedNo={selectedCard}
     />,
-  ];
+  ]; */
 
   async function someAsyncFnc() {
     await 1;

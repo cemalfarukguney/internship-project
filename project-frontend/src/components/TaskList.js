@@ -1,17 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import { Navbar, Container, Button, Col, Row } from "react-bootstrap";
 import TaskCard from "./TaskCard";
 import TaskListContext from "../context/TaskListContext";
 import StoryPoints from "./StoryPoints";
-import axios from 'axios';
+import axios from "axios";
 
 export default function TaskList(props) {
+  const [points, setPoints] = useState([]);
 
   async function handleCreate() {
     await axios
       .post(`http://localhost:8080/addIssue/1/1`, {
         issueName: "backend işleri",
-        description: "adasdasdasdasd"
+        description: "adasdasdasdasd",
       })
       .then(function (response) {
         console.log(response.data);
@@ -20,7 +21,7 @@ export default function TaskList(props) {
         console.log(error);
       });
 
-      console.log("kk")
+    console.log("kk");
   }
 
   async function voteIssue() {
@@ -33,7 +34,11 @@ export default function TaskList(props) {
 
   async function twoPoint() {
     await axios
-      .post(`http://localhost:8080/addPoint/1/1/2`, {})
+      .post(`http://localhost:8080/addPoint/1/1/2`, {
+        issueId: 1,
+        userId: 1,
+        point: 2,
+      })
       .then(function (response) {
         console.log(response.data);
       })
@@ -41,8 +46,14 @@ export default function TaskList(props) {
         console.log(error);
       });
 
-      console.log("puan verildi")
+    console.log("puan verildi");
   }
+
+  const getAllPoints = async () => {
+    const response = await axios.get(`http://localhost:8080/getAllPoints/1`);
+    setPoints(response.data);
+    console.log("points:", points);
+  };
 
   return (
     <div>
@@ -64,6 +75,7 @@ export default function TaskList(props) {
                 <Button onClick={voteIssue}>select issue</Button>
                 <Button onClick={revealCard}>reveal card</Button>
                 <Button onClick={twoPoint}>2 puan ver</Button>
+                <Button onClick={getAllPoints}>Puanları göster</Button>
 
                 <Col sm={5}>
                   <Row>
