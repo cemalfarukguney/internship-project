@@ -21,8 +21,8 @@ function JoinGameForm() {
 
   const { username, setUsername } = useContext(UserContext)[0];
   const { updated, setUpdated } = useContext(UserContext)[2];
+  const { gameId, setGameId } = useContext(UserContext)[3];
 
-  const [gameId, setGameId] = useState(0);
   const [userId, setUserId] = useState(0);
   // const [done, setDone] = useState(false);
 

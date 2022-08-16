@@ -19,9 +19,9 @@ export default function CreateGameForm() {
   const { username, setUsername } = useContext(UserContext)[0];
   const { roomName, setRoomName } = useContext(UserContext)[1];
   const { updated, setUpdated } = useContext(UserContext)[2];
+  const { gameId, setGameId } = useContext(UserContext)[3];
 
   const [userId, setUserId] = useState(0);
-  const [gameId, setGameId] = useState(0);
 
   let stompClient;
   const navigate = useNavigate();
@@ -57,10 +57,6 @@ export default function CreateGameForm() {
     axios.get(`http://localhost:8080/callData/${id}`);
     setGameId(saveResponse.data.gameId);
     setUserId(saveResponse.data.userId);
-  }
-
-  function changeRoomName() {
-    console.log("Yazan" + roomNameRef.current.value);
   }
 
   async function handleCreate(callback) {

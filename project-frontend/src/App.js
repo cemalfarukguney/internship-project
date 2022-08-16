@@ -10,6 +10,7 @@ function App() {
   const [username, setUsername] = useState("Name");
   const [roomName, setRoomName] = useState("Room");
   const [updated, setUpdated] = useState(false);
+  const [gameId, setGameId] = useState(-1);
 
   function hasJwt() {
     let flag = false;
@@ -24,6 +25,7 @@ function App() {
           { username, setUsername },
           { roomName, setRoomName },
           { updated, setUpdated },
+          { gameId, setGameId },
         ]}
       >
         <BrowserRouter>
