@@ -1,13 +1,24 @@
 import React, { useContext, useRef } from "react";
 import { Form, CloseButton, Button, Modal } from "react-bootstrap";
 import { UserContext } from "../context/UserContext";
+import axios from "axios";
 
 function SettingsPopup(props) {
   const roomNameRef = useRef(null);
   const { roomName, setRoomName } = useContext(UserContext)[1];
+  const { updated, setUpdated } = useContext(UserContext)[2];
+  const { gameId, setGameId } = useContext(UserContext)[3];
+
+  async function updateGameName(newName) {
+    await axios.put(
+      `http://localhost:8080/changeGameName/${gameId}/${newName}`
+    );
+  }
 
   function handleSubmit() {
     setRoomName(roomNameRef.current.value);
+    updateGameName(roomNameRef.current.value);
+    setUpdated((prev) => !prev);
     props.setTrigger(false);
   }
 

@@ -22,7 +22,7 @@ function JoinGameForm() {
   const { username, setUsername } = useContext(UserContext)[0];
   const { updated, setUpdated } = useContext(UserContext)[2];
   const { gameId, setGameId } = useContext(UserContext)[3];
-  const { selectedIssue, setSelectedIssue } = useContext(UserContext)[4]
+  const { selectedIssue, setSelectedIssue } = useContext(UserContext)[4];
 
   const [userId, setUserId] = useState(0);
   // const [done, setDone] = useState(false);
@@ -41,8 +41,9 @@ function JoinGameForm() {
           let doneVoters = [];
           updateVoterState(voters, doneVoters);
           updateGameState(data.game.gameStatus);
-          setSelectedIssue(data.game.selectedIssue.id);
-
+          data.game.selectedIssue
+            ? setSelectedIssue(data.game.selectedIssue.id)
+            : setSelectedIssue(0);
           setUpdated((prev) => !prev);
         }
       );
