@@ -24,28 +24,6 @@ function MainGameScreen(props) {
     setState(childData);
   };
 
-  const updateTask = useCallback(
-    (id, props) => {
-      const idx = tasks.findIndex((t) => t.id === id);
-
-      if (idx < 0) {
-        return; // task is not found
-      }
-
-      const orig = tasks[idx];
-      const updated = {
-        ...orig,
-        ...omitUndefined(props),
-      };
-      const ntasks = tasks.slice();
-
-      ntasks.splice(idx, 1, updated);
-
-      setTasks(ntasks);
-    },
-    [tasks, setTasks]
-  );
-
 /*   async function getGameState() {
     const userId = localStorage.getItem("token");
     await axios
@@ -59,7 +37,7 @@ function MainGameScreen(props) {
 
   return (
     <div className="main-game-screen">
-      <TaskListContext.Provider value={[{tasks, setTasks}, {updateTask}]}>
+      <TaskListContext.Provider value={[{tasks, setTasks}]}>
         <Navbar parentCallback={callbackFunction} />
         <MainBody taskState={state} />
       </TaskListContext.Provider>

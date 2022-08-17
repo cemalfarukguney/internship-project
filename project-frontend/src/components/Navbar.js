@@ -13,13 +13,13 @@ export default function Navbar(props) {
   const [{ username, setUsername }, { roomName, setRoomName }] =
     useContext(UserContext);
   const [isShown, setIsShown] = useState(false);
+  const { updated, setUpdated } = useContext(UserContext)[2];
 
   const handleClick = useCallback((event) => {
     setIsShown((current) => {
       const newIsShown = !current;
-
       props.parentCallback(newIsShown);
-
+      setUpdated((prev) => !prev);
       return newIsShown;
     });
   });

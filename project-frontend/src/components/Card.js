@@ -8,15 +8,6 @@ function Card(props) {
   const {selectedIssue, setSelectedIssue} = useContext(UserContext)[4]
   const userId = localStorage.getItem("token");
 
-/*   async function getInfo() {
-    //console.log(`trying:   http://localhost:8080/user/${userId}`);
-    await axios
-      .get(`http://localhost:8080/user/${userId}`)
-      .then(function (response) {
-        setSelectedIssue(response.data.inGame.selectedIssue);
-      });
-  } */
-
   return (
     <div className="card--div">
       {props.selectedNo !== props.number && (

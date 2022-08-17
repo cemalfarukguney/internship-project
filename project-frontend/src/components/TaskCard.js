@@ -41,8 +41,11 @@ function TaskCard(props) {
     "?",
   ];
 
+  const userId = localStorage.getItem("token");
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   let gameId;
   async function fetchData() {
     const userId = localStorage.getItem("token");
@@ -50,11 +53,11 @@ function TaskCard(props) {
       .get(`http://localhost:8080/user/${userId}`)
       .then(function (response) {
         gameId = response.data.inGame.id;
-        console.log(response.data.inGame.id);
+        console.log("adasd:", response.data.inGame.id);
       });
   }
 
-  async function handleVoteIssue() {
+/*   async function handleVoteIssue() {
     console.log("select issue");
     console.log("task id: " + task.id);
     await axios
@@ -66,11 +69,44 @@ function TaskCard(props) {
       .catch(function (error) {
         console.log(error);
       });
+  } */
+
+  async function voteIssue() {
+    axios.get(`http://localhost:8080/selectIssue/${gameId}/${task.id}`);
+    setSelectedIssue(task.id);
+    console.log(`${task.id} id'li issue seçildi.`);
   }
+
+  async function updateTask(newPoint) {
+    await axios
+      .get(`http://localhost:8080/appendPointIssue/${gameId}/${task.id}/${newPoint}`)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const storyPointValues = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+
+  async function getClosest(storyPoint){
+    var closestID;
+    let diff = 1000;
+    for(let i = 0; i < storyPointValues.length; i++){
+      if(Math.abs(storyPointValues[i]-storyPoint) < diff){
+        diff = Math.abs(storyPointValues[i]-storyPoint);
+        closestID = i;
+      }
+    }
+    return storyPointValues[closestID];
+  }
+
   fetchData();
+
   return (
     <TaskListContext.Consumer>
-      {([, , updateTask]) => (
+      {([]) => (
         <>
           <Container className="w-100 p-2">
             <Card>
@@ -85,7 +121,7 @@ function TaskCard(props) {
                   <CgMore />
                 </Button>
                 <Card.Title>{task.issueName}</Card.Title>
-                <Button variant="primary" onClick={() => handleVoteIssue()}>
+                <Button variant="primary" onClick={() => voteIssue()}>
                   Vote this issue
                 </Button>
                 <DropdownButton
@@ -102,14 +138,14 @@ function TaskCard(props) {
                   {storyPoints?.map((storyPoint, index) => (
                     <Dropdown.Item
                       key={index}
-                      onClick={() => updateTask(task.id, { storyPoint })}
+                      onClick={() => updateTask(storyPoint)}
                     >
                       {storyPoint}
                     </Dropdown.Item>
                   ))}
                 </DropdownButton>
                 <Button variant="info" className="float-end">
-                  ortalama
+                  {storyPoint}
                 </Button>
               </Card.Body>
             </Card>

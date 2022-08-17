@@ -33,9 +33,8 @@ export default function MainBody(props) {
   return (
     <div className="main--div">
       {(isMounted = true)}
-      <button onClick={sendToConsole}>click</button>
       {gameState === "VOTING" && <CardGrid />}
-      <div>{props.taskState && <TaskList />}</div>
+      {props.taskState && <TaskList />}
     </div>
   );
 }

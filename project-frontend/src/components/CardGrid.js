@@ -21,6 +21,7 @@ function CardGrid() {
   const [voterState, setVoterState] = useState([]);
   const [doneVoterState, setDoneVoterState] = useState([]);
   const { updated, setUpdated } = useContext(UserContext)[2];
+  const { gameId, setGameId } = useContext(UserContext)[3];
 
     const storyPoints = [
     "0",
@@ -75,6 +76,10 @@ function CardGrid() {
     }
   }, [updated]);
 
+  async function revealCard() {
+    axios.get(`http://localhost:8080/revealCards/${gameId}`);
+  }
+
   return (
     <div className="cardgrid--wrapper">
       {(isMounted = true)}
@@ -88,7 +93,7 @@ function CardGrid() {
       </div>
       <div className="cardgrid--div">{cards}</div>
       <div className="reveal-button--div">
-        {selectedCard !== -1 && <Button variant="primary">Reveal Cards</Button>}
+        {selectedCard !== -1 && <Button variant="primary" onClick={revealCard}>Reveal Cards</Button>}
       </div>
     </div>
   );

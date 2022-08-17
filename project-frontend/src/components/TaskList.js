@@ -18,64 +18,33 @@ export default function TaskList(props) {
   const { selectedIssue, setSelectedIssue } = useContext(UserContext)[4];
   const { updated, setUpdated } = useContext(UserContext)[2];
   const { tasks, setTasks } = useContext(TaskListContext)[0];
+  const { gameId, setGameId } = useContext(UserContext)[3];
+  const userId = localStorage.getItem("token");
  
+  let isMounted = false;
   useEffect(() => {
     console.log("in useEffect taskList changed");
     setTasks(tempTasks);
-  }, [updated]);
+  }, [updated, isMounted]);
 
   async function handleCreate() {
     await axios
-      .post(`http://localhost:8080/addIssue/1/1`, {
+      .post(`http://localhost:8080/addIssue/${gameId}/${userId}`, {
         issueName: "backend işleri",
         description: "adasdasdasdasd",
       })
       .then(function (response) {
         console.log(response.data);
+        console.log(`${userId} id'li kullanıcı task ekledi...`)
       })
       .catch(function (error) {
         console.log(error);
       });
-
-    console.log("kk");
   }
-
-  async function voteIssue() {
-    axios.get(`http://localhost:8080/selectIssue/1/1`);
-    setSelectedIssue(1);
-    console.log("1. issue selectted");
-  }
-
-  async function revealCard() {
-    axios.get(`http://localhost:8080/revealCards/1`);
-  }
-
-  async function twoPoint() {
-    await axios
-      .post(`http://localhost:8080/addPoint/1/1/2/2`, {
-        gameId: 1,
-        issueId: 1,
-        userId: 1,
-        point: 2,
-      })
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    console.log("puan verildi");
-  }
-
-  const getAllPoints = async () => {
-    const response = await axios.get(`http://localhost:8080/getAllPoints/1`);
-    setPoints(response.data);
-    console.log("points:", points);
-  };
 
   return (
-    <div>
+    <div className="taskListDiv">
+      {(isMounted = true)}
           <Container
             className="square border border-dark float-end overflow-auto"
             style={{ width: "600px", maxHeight: "800px" }}
@@ -89,11 +58,6 @@ export default function TaskList(props) {
                   <Navbar.Brand>ISSUES</Navbar.Brand>
                 </Col>
                 <Button onClick={handleCreate}>add issue</Button>
-                <Button onClick={voteIssue}>select issue</Button>
-                <Button onClick={revealCard}>reveal card</Button>
-                <Button onClick={twoPoint}>2 puan ver</Button>
-                <Button onClick={getAllPoints}>Puanları göster</Button>
-
                 <Col sm={5}>
                   <Row>
                     <Navbar.Text>{tasks.length} issues</Navbar.Text>
@@ -103,9 +67,6 @@ export default function TaskList(props) {
                       <StoryPoints tasks={tasks} />
                     </Navbar.Text>
                   </Row>
-                </Col>
-                <Col sm={4}>
-                  <Button variant="outline-dark">Import from JIRA</Button>
                 </Col>
               </Container>
             </Navbar>
