@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 import React, { useContext, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Card from './Card';
@@ -98,7 +98,7 @@ function CardGrid(props) {
 
         </div>
     );
-=======
+=======*/
 import React, { useContext, useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Card from "./Card";
@@ -193,6 +193,6 @@ function CardGrid() {
       </div>
     </div>
   );
->>>>>>> 6e352c00ad21f427c76208c67a6031032a0b0d94
+//>>>>>>> 6e352c00ad21f427c76208c67a6031032a0b0d94
 }
 export default CardGrid;
