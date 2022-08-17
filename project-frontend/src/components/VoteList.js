@@ -39,7 +39,7 @@ function VoteList() {
       </div>
       <div className="cardgrid--div">
         <h3 className="average--h3">
-          average storypoint = {total / userNumber}
+          average storypoint = {(total / userNumber) % 1 === 0 ? (total / userNumber) : (total / userNumber).toFixed(2)}
         </h3>
       </div>
     </div>

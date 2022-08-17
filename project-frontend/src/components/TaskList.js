@@ -30,8 +30,8 @@ export default function TaskList(props) {
   async function handleCreate() {
     await axios
       .post(`http://localhost:8080/addIssue/${gameId}/${userId}`, {
-        issueName: "backend işleri",
-        description: "adasdasdasdasd",
+        issueName: "Backlog tasklarını için story point belirlenmesi.",
+        description: "Staj projesi: Sprintlerdeki backlog taskları için storypoint belirlenmesi gerekmektedir.",
       })
       .then(function (response) {
         console.log(response.data);

@@ -132,9 +132,6 @@ function TaskCard(props) {
                     </Dropdown.Item>
                   ))}
                 </DropdownButton>
-                <Button variant="info" className="float-end">
-                  {storyPoint}
-                </Button>
               </Card.Body>
             </Card>
           </Container>
