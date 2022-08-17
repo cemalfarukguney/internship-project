@@ -11,6 +11,7 @@ import { updateVoterState } from "./CardGrid";
 import { useNavigate } from "react-router-dom";
 import { updateTasks } from "./TaskList";
 import { updateIssuePoint } from "./VoteList";
+import { waitFor } from "@testing-library/react";
 
 function JoinGameForm() {
   const [show, setShow] = useState(false);
@@ -29,11 +30,11 @@ function JoinGameForm() {
   const [userId, setUserId] = useState(0);
   // const [done, setDone] = useState(false);
 
-  function connectToSocket(gameId) {
+  async function connectToSocket(gameId) {
     console.log("connecting to the game");
     let socket = new SockJS("http://localhost:8080/gameplay");
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
+    await stompClient.connect({}, function (frame) {
       console.log("connected to the frame: " + frame);
       stompClient.subscribe(
         "/topic/game-progress/" + gameId,
@@ -54,15 +55,30 @@ function JoinGameForm() {
         }
       );
     });
+    waitForSocketConnection(socket, callData);
   }
 
-  function callData(id) {
-    axios.get(`http://localhost:8080/callData/${id}`);
+  function waitForSocketConnection(socket, callback) {
+    setTimeout(function () {
+      if (socket.readyState === 1) {
+        console.log("Connection is made");
+        if (callback != null) {
+          callback(tempGameId);
+        }
+      } else {
+        console.log("wait for connection...");
+        waitForSocketConnection(socket, callback);
+      }
+    }, 5);
   }
 
+  async function callData(id) {
+    await axios
+      .get(`http://localhost:8080/callData/${id}`)
+      .then(console.log("DATA CALLED IN JOIN"));
+  }
+  var tempGameId;
   async function handleJoin(callback) {
-    // setGameId(roomIdRef.current.value);
-    let tempGameId;
     await axios
       .get(
         `http://localhost:8080/joinGame/${roomIdRef.current.value}/${username}`,
@@ -80,12 +96,11 @@ function JoinGameForm() {
         localStorage.clear();
         localStorage.setItem("token", token);
         console.log("Token saved: " + token);
-        connectToSocket(response.data.gameId);
+        connectToSocket(response.data.gameId, callback);
         console.log(username);
       })
       .then(function () {
         navigate("/game");
-        callData(tempGameId);
       })
       .catch(function (error) {
         console.log(error);
