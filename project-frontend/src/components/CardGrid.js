@@ -35,7 +35,6 @@ function CardGrid() {
     "55",
     "89",
     "?",
-
   ];
 
   const printCardNumber = (sp) => {
@@ -65,84 +64,6 @@ function CardGrid() {
                   onClick={addPointToIssue}/>)
   })}
 
- /*  var cards = [
-    <Card
-      key="0"
-      number={0}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-    <Card
-      key="1"
-      number={1}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-    <Card
-      key="2"
-      number={2}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-    <Card
-      key="3"
-      number={3}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-    <Card
-      key="5"
-      number={5}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-    <Card
-      key="8"
-      number={8}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-    <Card
-      key="13"
-      number={13}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-    <Card
-      key="21"
-      number={21}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-    <Card
-      key="34"
-      number={34}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-    <Card
-      key="55"
-      number={55}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-    <Card
-      key="89"
-      number={89}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-    <Card
-      key="?"
-      number={"?"}
-      selectCard={setSelectedCard}
-      selectedNo={selectedCard}
-    />,
-  ]; */
-
-  async function someAsyncFnc() {
-    await 1;
-  }
   let isMounted = false;
 
   useEffect(() => {

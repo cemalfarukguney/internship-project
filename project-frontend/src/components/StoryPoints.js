@@ -1,8 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
+import TaskListContext from "../context/TaskListContext";
 
 const INT_REGEX = /^\d+$/;
 
-function StoryPoints({ tasks }) {
+function StoryPoints() {
+  const { tasks, setTasks } = useContext(TaskListContext)[0];
+
   const total = useMemo(
     () =>
       tasks.reduce((acc, task) => {

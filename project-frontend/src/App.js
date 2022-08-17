@@ -27,7 +27,7 @@ function App() {
           { roomName, setRoomName },
           { updated, setUpdated },
           { gameId, setGameId },
-          { selectedIssue, setSelectedIssue},
+          { selectedIssue, setSelectedIssue },
         ]}
       >
         <BrowserRouter>

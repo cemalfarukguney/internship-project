@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Navbar, Container, Button, Col, Row } from "react-bootstrap";
 import TaskCard from "./TaskCard";
 import TaskListContext from "../context/TaskListContext";
@@ -6,9 +6,23 @@ import StoryPoints from "./StoryPoints";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 
+let tempTasks = [];
+
+export function updateTasks(updatedTasks) {
+  tempTasks = updatedTasks;
+  console.log("TASKS UPDATED...");
+}
+
 export default function TaskList(props) {
   const [points, setPoints] = useState([]);
-  const { selectedIssue, setSelectedIssue } = useContext(UserContext)[4]
+  const { selectedIssue, setSelectedIssue } = useContext(UserContext)[4];
+  const { updated, setUpdated } = useContext(UserContext)[2];
+  const { tasks, setTasks } = useContext(TaskListContext)[0];
+ 
+  useEffect(() => {
+    console.log("in useEffect taskList changed");
+    setTasks(tempTasks);
+  }, [updated]);
 
   async function handleCreate() {
     await axios
@@ -29,12 +43,11 @@ export default function TaskList(props) {
   async function voteIssue() {
     axios.get(`http://localhost:8080/selectIssue/1/1`);
     setSelectedIssue(1);
-    console.log("1. issue selectted")
+    console.log("1. issue selectted");
   }
 
   async function revealCard() {
     axios.get(`http://localhost:8080/revealCards/1`);
-    
   }
 
   async function twoPoint() {
@@ -63,8 +76,6 @@ export default function TaskList(props) {
 
   return (
     <div>
-      <TaskListContext.Consumer>
-        {([tasks]) => (
           <Container
             className="square border border-dark float-end overflow-auto"
             style={{ width: "600px", maxHeight: "800px" }}
@@ -102,8 +113,6 @@ export default function TaskList(props) {
               return <TaskCard key={task.id} task={task} />;
             })}
           </Container>
-        )}
-      </TaskListContext.Consumer>
     </div>
   );
 }

@@ -8,7 +8,6 @@ import omitUndefined from "../utils/omit-undefined";
 import { Navigate } from "react-router-dom";
 
 function MainGameScreen(props) {
-  //const [issues, setIssues] = useState([]);
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -19,13 +18,12 @@ function MainGameScreen(props) {
     fetchData();
   }, []);
 
-  //console.log(tasks)
-
   const [state, setState] = useState(false);
 
   const callbackFunction = (childData) => {
     setState(childData);
   };
+
   const updateTask = useCallback(
     (id, props) => {
       const idx = tasks.findIndex((t) => t.id === id);
@@ -61,7 +59,7 @@ function MainGameScreen(props) {
 
   return (
     <div className="main-game-screen">
-      <TaskListContext.Provider value={[tasks, setTasks, updateTask]}>
+      <TaskListContext.Provider value={[{tasks, setTasks}, {updateTask}]}>
         <Navbar parentCallback={callbackFunction} />
         <MainBody taskState={state} />
       </TaskListContext.Provider>

@@ -9,6 +9,7 @@ import * as Stomp from "stompjs";
 import { updateGameState } from "./MainBody";
 import { updateVoterState } from "./CardGrid";
 import { useNavigate } from "react-router-dom";
+import { updateTasks } from "./TaskList";
 
 function JoinGameForm() {
   const [show, setShow] = useState(false);
@@ -44,6 +45,10 @@ function JoinGameForm() {
           data.game.selectedIssue
             ? setSelectedIssue(data.game.selectedIssue.id)
             : setSelectedIssue(0);
+
+          let tasks = data.issues;
+          updateTasks(tasks);
+
           setUpdated((prev) => !prev);
         }
       );

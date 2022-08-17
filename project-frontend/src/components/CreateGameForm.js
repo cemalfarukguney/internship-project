@@ -9,6 +9,8 @@ import * as Stomp from "stompjs";
 import { updateGameState } from "./MainBody";
 import { updateVoterState } from "./CardGrid";
 import { useNavigate } from "react-router-dom";
+import { updateTasks } from "./TaskList";
+//import TaskListContext from "../context/TaskListContext";
 
 export default function CreateGameForm() {
   const [show, setShow] = useState(false);
@@ -40,14 +42,18 @@ export default function CreateGameForm() {
           console.log("Mesaj!!!!!?_");
           console.log("DATA: " + data);
           let voters = data.users.map((a) => a.name);
-          // let doneVoters = data.users.map(())
           let doneVoters = [];
           updateVoterState(voters, doneVoters);
           console.log("USERNAME: " + voters);
           updateGameState(data.game.gameStatus);
+
           data.game.selectedIssue
-            ? setSelectedIssue(data.game.selectedIssue.id)
-            : setSelectedIssue(0);
+          ? setSelectedIssue(data.game.selectedIssue.id)
+          : setSelectedIssue(0);
+
+          let tasks = data.issues;
+          updateTasks(tasks);
+
           setUpdated((prev) => !prev);
           console.log("ISSUE POINTS:", data.issuePoints);
         }
