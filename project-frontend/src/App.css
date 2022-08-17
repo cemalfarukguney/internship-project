@@ -209,24 +209,26 @@
 }
 
 .card--div-button{
-  width: 48px;
-  height: 84px;
+  width: 64px;
+  height: 112px;
   background-color: whitesmoke;
   color: rgb(91, 91, 246);
   border: 1px rgb(91, 91, 246) solid;
   border-radius: 10px;
   font-size: 20px;
   margin-bottom: 0px;
+  text-align:center;
 }
 
 .card--div-button-selected{
-  width: 48px;
-  height: 84px;
+  width: 64px;
+  height: 112px;
   background-color: rgb(91, 91, 246);
   color: whitesmoke;
   border: 1px rgb(91, 91, 246) solid;
   border-radius: 10px;
   font-size: 20px;
+  text-align: center;
   margin-bottom: 5px;
 }
 
@@ -293,4 +295,43 @@
   border-radius: 20px;
   font-size: larger;
   font-weight: bold;
+}
+
+.average--h3{
+  width: 300px;
+  height: 70px;
+  background-color: rgb(91, 91, 246);
+  color: whitesmoke;
+  border: 1px rgb(91, 91, 246) solid;
+  border-radius: 10px;
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
+  margin: 20px;
+}
+
+.votecard--div{
+  width: 64px;
+  height: 112px;
+  background-color: whitesmoke;
+  color: rgb(91, 91, 246);
+  border: 1px rgb(91, 91, 246) solid;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 0px;
+  padding-top: 15px;
+  text-align:center;
+}
+
+.votecard--div-selected{
+  width: 64px;
+  height: 112px;
+  background-color: rgb(91, 91, 246);
+  color: whitesmoke;
+  border: 1px rgb(91, 91, 246) solid;
+  border-radius: 10px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 5px;
+  padding-top:15px ;
 }
