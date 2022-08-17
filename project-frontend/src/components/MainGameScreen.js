@@ -5,9 +5,9 @@ import { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 import TaskListContext from "../context/TaskListContext";
 import omitUndefined from "../utils/omit-undefined";
+import { Navigate } from "react-router-dom";
 
-function MainGameScreen() {
-  //const [issues, setIssues] = useState([]);
+function MainGameScreen(props) {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -18,13 +18,12 @@ function MainGameScreen() {
     fetchData();
   }, []);
 
-  //console.log(tasks)
-
   const [state, setState] = useState(false);
 
   const callbackFunction = (childData) => {
     setState(childData);
   };
+
   const updateTask = useCallback(
     (id, props) => {
       const idx = tasks.findIndex((t) => t.id === id);
@@ -46,9 +45,21 @@ function MainGameScreen() {
     },
     [tasks, setTasks]
   );
+
+/*   async function getGameState() {
+    const userId = localStorage.getItem("token");
+    await axios
+      .get(`http://localhost:8080/user/${userId}`)
+      .then(function (response) {
+        // setGameState(response.data.inGame.gameStatus);
+        console.log(response.data);
+      });
+  }
+  getGameState(); */
+
   return (
     <div className="main-game-screen">
-      <TaskListContext.Provider value={[tasks, setTasks, updateTask]}>
+      <TaskListContext.Provider value={[{tasks, setTasks}, {updateTask}]}>
         <Navbar parentCallback={callbackFunction} />
         <MainBody taskState={state} />
       </TaskListContext.Provider>

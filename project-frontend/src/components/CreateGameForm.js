@@ -6,6 +6,11 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import * as SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
+import { updateGameState } from "./MainBody";
+import { updateVoterState } from "./CardGrid";
+import { useNavigate } from "react-router-dom";
+import { updateTasks } from "./TaskList";
+//import TaskListContext from "../context/TaskListContext";
 
 export default function CreateGameForm() {
   const [show, setShow] = useState(false);
@@ -15,11 +20,14 @@ export default function CreateGameForm() {
 
   const { username, setUsername } = useContext(UserContext)[0];
   const { roomName, setRoomName } = useContext(UserContext)[1];
+  const { updated, setUpdated } = useContext(UserContext)[2];
+  const { gameId, setGameId } = useContext(UserContext)[3];
+  const { selectedIssue, setSelectedIssue } = useContext(UserContext)[4];
 
   const [userId, setUserId] = useState(0);
-  const [gameId, setGameId] = useState(0);
 
   let stompClient;
+  const navigate = useNavigate();
 
   function connectToSocket(gameId) {
     console.log("connecting to the game");
@@ -31,30 +39,59 @@ export default function CreateGameForm() {
         "/topic/game-progress/" + gameId,
         function (response) {
           let data = JSON.parse(response.body);
-          //console.log(data);
+          console.log("Mesaj!!!!!?_");
+          console.log("DATA: " + data);
+          let voters = data.users.map((a) => a.name);
+          let doneVoters = [];
+          updateVoterState(voters, doneVoters);
+          console.log("USERNAME: " + voters);
+          updateGameState(data.game.gameStatus);
+
+          data.game.selectedIssue
+          ? setSelectedIssue(data.game.selectedIssue.id)
+          : setSelectedIssue(0);
+
+          let tasks = data.issues;
+          updateTasks(tasks);
+
+          setUpdated((prev) => !prev);
+          console.log("ISSUE POINTS:", data.issuePoints);
         }
       );
     });
   }
 
+  let saveResponse;
+
   function callData(id) {
     console.log(gameId);
     axios.get(`http://localhost:8080/callData/${id}`);
+    setGameId(saveResponse.data.gameId);
+    setUserId(saveResponse.data.userId);
   }
 
   async function handleCreate(callback) {
     setRoomName(roomNameRef.current.value);
     await axios
-      .post(`http://localhost:8080/createGame/${username}`, {
-        userName: username,
-      })
+      .post(
+        `http://localhost:8080/createGame/${username}/${roomNameRef.current.value}`,
+        {
+          userName: username,
+        }
+      )
       .then(function (response) {
         console.log(response.data);
         console.log("game id: ", response.data.gameId);
-        setUserId(response.data.userId);
-        setGameId(response.data.gameId);
+        const token = response.data.userId;
+        localStorage.clear();
+        localStorage.setItem("token", token);
+        console.log("Token saved: " + token);
+        saveResponse = response;
         connectToSocket(response.data.gameId);
         callback(response.data.gameId);
+      })
+      .then(function () {
+        navigate("/game");
       })
       .catch(function (error) {
         console.log(error);
@@ -67,7 +104,7 @@ export default function CreateGameForm() {
         Create New Game
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -83,11 +120,9 @@ export default function CreateGameForm() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Link to="/game">
-            <Button variant="primary" onClick={() => handleCreate(callData)}>
-              Create
-            </Button>
-          </Link>
+          <Button variant="primary" onClick={() => handleCreate(callData)}>
+            Create
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

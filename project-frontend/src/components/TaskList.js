@@ -1,14 +1,81 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Navbar, Container, Button, Col, Row } from "react-bootstrap";
 import TaskCard from "./TaskCard";
 import TaskListContext from "../context/TaskListContext";
 import StoryPoints from "./StoryPoints";
+import axios from "axios";
+import { UserContext } from "../context/UserContext";
+
+let tempTasks = [];
+
+export function updateTasks(updatedTasks) {
+  tempTasks = updatedTasks;
+  console.log("TASKS UPDATED...");
+}
 
 export default function TaskList(props) {
+  const [points, setPoints] = useState([]);
+  const { selectedIssue, setSelectedIssue } = useContext(UserContext)[4];
+  const { updated, setUpdated } = useContext(UserContext)[2];
+  const { tasks, setTasks } = useContext(TaskListContext)[0];
+ 
+  useEffect(() => {
+    console.log("in useEffect taskList changed");
+    setTasks(tempTasks);
+  }, [updated]);
+
+  async function handleCreate() {
+    await axios
+      .post(`http://localhost:8080/addIssue/1/1`, {
+        issueName: "backend işleri",
+        description: "adasdasdasdasd",
+      })
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    console.log("kk");
+  }
+
+  async function voteIssue() {
+    axios.get(`http://localhost:8080/selectIssue/1/1`);
+    setSelectedIssue(1);
+    console.log("1. issue selectted");
+  }
+
+  async function revealCard() {
+    axios.get(`http://localhost:8080/revealCards/1`);
+  }
+
+  async function twoPoint() {
+    await axios
+      .post(`http://localhost:8080/addPoint/1/1/2/2`, {
+        gameId: 1,
+        issueId: 1,
+        userId: 1,
+        point: 2,
+      })
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    console.log("puan verildi");
+  }
+
+  const getAllPoints = async () => {
+    const response = await axios.get(`http://localhost:8080/getAllPoints/1`);
+    setPoints(response.data);
+    console.log("points:", points);
+  };
+
   return (
     <div>
-      <TaskListContext.Consumer>
-        {([tasks]) => (
           <Container
             className="square border border-dark float-end overflow-auto"
             style={{ width: "600px", maxHeight: "800px" }}
@@ -21,6 +88,12 @@ export default function TaskList(props) {
                 <Col sm={3}>
                   <Navbar.Brand>ISSUES</Navbar.Brand>
                 </Col>
+                <Button onClick={handleCreate}>add issue</Button>
+                <Button onClick={voteIssue}>select issue</Button>
+                <Button onClick={revealCard}>reveal card</Button>
+                <Button onClick={twoPoint}>2 puan ver</Button>
+                <Button onClick={getAllPoints}>Puanları göster</Button>
+
                 <Col sm={5}>
                   <Row>
                     <Navbar.Text>{tasks.length} issues</Navbar.Text>
@@ -40,8 +113,6 @@ export default function TaskList(props) {
               return <TaskCard key={task.id} task={task} />;
             })}
           </Container>
-        )}
-      </TaskListContext.Consumer>
     </div>
   );
 }
