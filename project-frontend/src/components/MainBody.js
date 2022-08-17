@@ -33,8 +33,9 @@ export default function MainBody(props) {
   return (
     <div className="main--div">
       {(isMounted = true)}
+      <p></p>
       {gameState === "VOTING" && <CardGrid />}
-      {props.taskState && <TaskList />}
+      <div>{props.taskState && <TaskList />}</div>
     </div>
   );
 }

@@ -122,6 +122,7 @@ function CardGrid() {
   const [voterState, setVoterState] = useState([]);
   const [doneVoterState, setDoneVoterState] = useState([]);
   const { updated, setUpdated } = useContext(UserContext)[2];
+  const {gameId, setGameId} = useContext(UserContext)[3]
 
     const storyPoints = [
     "0",
@@ -137,10 +138,6 @@ function CardGrid() {
     "89",
     "?",
   ];
-
-  const printCardNumber = (sp) => {
-    console.log("card number: ", sp)
-}
 
   async function addPointToIssue(gameId, issueId, userId, point) {
     await axios
@@ -185,6 +182,7 @@ function CardGrid() {
       {(isMounted = true)}
       <h3 className="cardgrid--h3">Dear {username},</h3>
       <div>
+        <p>VOTERS</p>
         {voterState.map((voter) => (
           <h3>{voter}</h3>
         ))}
@@ -193,7 +191,7 @@ function CardGrid() {
       </div>
       <div className="cardgrid--div">{cards}</div>
       <div className="reveal-button--div">
-        {selectedCard !== -1 && <Button variant="primary">Reveal Cards</Button>}
+        {selectedCard !== -1 && <Button variant="primary" onClick={revealCard}>Reveal Cards</Button>}
       </div>
     </div>
   );

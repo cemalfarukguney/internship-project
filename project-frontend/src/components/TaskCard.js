@@ -57,22 +57,8 @@ function TaskCard(props) {
       });
   }
 
-/*   async function handleVoteIssue() {
-    console.log("select issue");
-    console.log("task id: " + task.id);
-    await axios
-      .get(`http://localhost:8080/selectIssue/${gameId}/${task.id}`, {})
-      .then(function (response) {
-        console.log(response);
-        setSelectedIssue(1);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  } */
-
   async function voteIssue() {
-    axios.get(`http://localhost:8080/selectIssue/${gameId}/${task.id}`);
+    await axios.get(`http://localhost:8080/selectIssue/${gameId}/${task.id}`);
     setSelectedIssue(task.id);
     console.log(`${task.id} id'li issue seçildi.`);
   }
@@ -99,9 +85,11 @@ function TaskCard(props) {
         closestID = i;
       }
     }
+    console.log(storyPointValues[closestID]);
     return storyPointValues[closestID];
   }
 
+  getClosest(storyPoint);
   fetchData();
 
   return (
@@ -121,8 +109,8 @@ function TaskCard(props) {
                   <CgMore />
                 </Button>
                 <Card.Title>{task.issueName}</Card.Title>
-                <Button variant="primary" onClick={() => voteIssue()}>
-                  Vote this issue
+                <Button style={{background: task.id === selectedIssue ? 'green' : 'blue'}} variant="primary" onClick={() => voteIssue()}>
+                  {`${task.id === selectedIssue ? "Voting Now" : "Vote this issue"}`}
                 </Button>
                 <DropdownButton
                   variant="dark"
@@ -180,6 +168,7 @@ function TaskCard(props) {
                   className="form-control"
                   defaultValue={task.issueName}
                   {...register("title")}
+                  disabled={true}
                 />
 
                 <label
@@ -195,6 +184,7 @@ function TaskCard(props) {
                   defaultValue={task.description}
                   rows={3}
                   {...register("description")}
+                  disabled={true}
                 ></textarea>
 
                 <label
@@ -213,20 +203,6 @@ function TaskCard(props) {
                 />
               </form>
             </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={() => setShow(false)}>
-                Close
-              </Button>
-              <Button
-                variant="primary"
-                onClick={handleSubmit((vals) => {
-                  updateTask(task.id, vals);
-                  setShow(false);
-                })}
-              >
-                Save Changes
-              </Button>
-            </Modal.Footer>
           </Modal>
         </>
       )}

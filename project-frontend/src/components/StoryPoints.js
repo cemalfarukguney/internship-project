@@ -3,12 +3,11 @@ import TaskListContext from "../context/TaskListContext";
 
 const INT_REGEX = /^\d+$/;
 
-function StoryPoints() {
-  const { tasks, setTasks } = useContext(TaskListContext)[0];
+function StoryPoints(props) {
 
   const total = useMemo(
     () =>
-      tasks.reduce((acc, task) => {
+      props.tasks.reduce((acc, task) => {
         const isIntString =
           task.storyPoint.toString().match(INT_REGEX) !== null;
 
@@ -18,7 +17,7 @@ function StoryPoints() {
 
         return acc;
       }, 0),
-    [tasks]
+    [props.tasks]
   );
 
   return <>{total} points</>;

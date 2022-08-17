@@ -43,7 +43,7 @@ export default function TaskList(props) {
   }
 
   return (
-    <div className="taskListDiv">
+    <div>
       {(isMounted = true)}
           <Container
             className="square border border-dark float-end overflow-auto"
