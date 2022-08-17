@@ -1,6 +1,7 @@
 import React from "react";
 import TaskList from "./TaskList";
 import CardGrid from "./CardGrid";
+import VoteList from "./VoteList";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Card } from "react-bootstrap";
@@ -35,6 +36,7 @@ export default function MainBody(props) {
       {(isMounted = true)}
       <p></p>
       {gameState === "VOTING" && <CardGrid />}
+      {gameState === "REVEALING" && <VoteList />}
       <div>{props.taskState && <TaskList />}</div>
     </div>
   );

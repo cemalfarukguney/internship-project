@@ -10,6 +10,7 @@ import { updateGameState } from "./MainBody";
 import { updateVoterState } from "./CardGrid";
 import { useNavigate } from "react-router-dom";
 import { updateTasks } from "./TaskList";
+import { updateIssuePoint } from "./VoteList";
 //import TaskListContext from "../context/TaskListContext";
 
 export default function CreateGameForm() {
@@ -42,17 +43,18 @@ export default function CreateGameForm() {
           console.log("Mesaj!!!!!?_");
           console.log("DATA: " + data);
           let voters = data.users.map((a) => a.name);
-          let doneVoters = [];
-          updateVoterState(voters, doneVoters);
+          let doneVoters = data.userVotes ? data.userVotes : [];
+          updateVoterState(doneVoters);
           console.log("USERNAME: " + voters);
           updateGameState(data.game.gameStatus);
 
           data.game.selectedIssue
-          ? setSelectedIssue(data.game.selectedIssue.id)
-          : setSelectedIssue(0);
+            ? setSelectedIssue(data.game.selectedIssue.id)
+            : setSelectedIssue(0);
 
           let tasks = data.issues;
           updateTasks(tasks);
+          updateIssuePoint(data.issuePoints);
 
           setUpdated((prev) => !prev);
           console.log("ISSUE POINTS:", data.issuePoints);
@@ -72,6 +74,7 @@ export default function CreateGameForm() {
 
   async function handleCreate(callback) {
     setRoomName(roomNameRef.current.value);
+    let tempGameId;
     await axios
       .post(
         `http://localhost:8080/createGame/${username}/${roomNameRef.current.value}`,
@@ -83,15 +86,16 @@ export default function CreateGameForm() {
         console.log(response.data);
         console.log("game id: ", response.data.gameId);
         const token = response.data.userId;
+        tempGameId = response.data.gameId;
         localStorage.clear();
         localStorage.setItem("token", token);
         console.log("Token saved: " + token);
         saveResponse = response;
         connectToSocket(response.data.gameId);
-        callback(response.data.gameId);
       })
       .then(function () {
         navigate("/game");
+        callback(tempGameId);
       })
       .catch(function (error) {
         console.log(error);

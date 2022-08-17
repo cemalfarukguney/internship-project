@@ -10,6 +10,7 @@ import { updateGameState } from "./MainBody";
 import { updateVoterState } from "./CardGrid";
 import { useNavigate } from "react-router-dom";
 import { updateTasks } from "./TaskList";
+import { updateIssuePoint } from "./VoteList";
 
 function JoinGameForm() {
   const [show, setShow] = useState(false);
@@ -38,14 +39,14 @@ function JoinGameForm() {
         "/topic/game-progress/" + gameId,
         function (response) {
           let data = JSON.parse(response.body);
-          let voters = data.users.map((a) => a.name);
-          let doneVoters = [];
-          updateVoterState(voters, doneVoters);
+          let doneVoters = data.userVotes ? data.userVotes : [];
+          updateVoterState(doneVoters);
           updateGameState(data.game.gameStatus);
           data.game.selectedIssue
             ? setSelectedIssue(data.game.selectedIssue.id)
             : setSelectedIssue(0);
 
+          updateIssuePoint(data.issuePoints);
           let tasks = data.issues;
           updateTasks(tasks);
 
@@ -61,6 +62,7 @@ function JoinGameForm() {
 
   async function handleJoin(callback) {
     // setGameId(roomIdRef.current.value);
+    let tempGameId;
     await axios
       .get(
         `http://localhost:8080/joinGame/${roomIdRef.current.value}/${username}`,
@@ -73,6 +75,7 @@ function JoinGameForm() {
         console.log("game id: ", response.data.gameId);
         setUserId(response.data.userId);
         setGameId(response.data.gameId);
+        tempGameId = response.data.gameId;
         const token = response.data.userId;
         localStorage.clear();
         localStorage.setItem("token", token);
@@ -82,6 +85,7 @@ function JoinGameForm() {
       })
       .then(function () {
         navigate("/game");
+        callData(tempGameId);
       })
       .catch(function (error) {
         console.log(error);

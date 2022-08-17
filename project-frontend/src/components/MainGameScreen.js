@@ -10,21 +10,13 @@ import { Navigate } from "react-router-dom";
 function MainGameScreen(props) {
   const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get("http://localhost:8080/issues");
-      setTasks(response.data);
-    };
-    fetchData();
-  }, []);
-
   const [state, setState] = useState(false);
 
   const callbackFunction = (childData) => {
     setState(childData);
   };
 
-/*   async function getGameState() {
+  /*   async function getGameState() {
     const userId = localStorage.getItem("token");
     await axios
       .get(`http://localhost:8080/user/${userId}`)
@@ -37,7 +29,7 @@ function MainGameScreen(props) {
 
   return (
     <div className="main-game-screen">
-      <TaskListContext.Provider value={[{tasks, setTasks}]}>
+      <TaskListContext.Provider value={[{ tasks, setTasks }]}>
         <Navbar parentCallback={callbackFunction} />
         <MainBody taskState={state} />
       </TaskListContext.Provider>

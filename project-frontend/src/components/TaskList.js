@@ -20,7 +20,7 @@ export default function TaskList(props) {
   const { tasks, setTasks } = useContext(TaskListContext)[0];
   const { gameId, setGameId } = useContext(UserContext)[3];
   const userId = localStorage.getItem("token");
- 
+
   let isMounted = false;
   useEffect(() => {
     console.log("in useEffect taskList changed");
@@ -35,7 +35,7 @@ export default function TaskList(props) {
       })
       .then(function (response) {
         console.log(response.data);
-        console.log(`${userId} id'li kullanıcı task ekledi...`)
+        console.log(`${userId} id'li kullanıcı task ekledi...`);
       })
       .catch(function (error) {
         console.log(error);
@@ -45,35 +45,35 @@ export default function TaskList(props) {
   return (
     <div>
       {(isMounted = true)}
+      <Container
+        className="square border border-dark float-end overflow-auto"
+        style={{ width: "600px", maxHeight: "700px" }}
+      >
+        <Navbar>
           <Container
-            className="square border border-dark float-end overflow-auto"
-            style={{ width: "600px", maxHeight: "800px" }}
+            className="square border border-dark"
+            style={{ height: "100px" }}
           >
-            <Navbar>
-              <Container
-                className="square border border-dark"
-                style={{ height: "100px" }}
-              >
-                <Col sm={3}>
-                  <Navbar.Brand>ISSUES</Navbar.Brand>
-                </Col>
-                <Button onClick={handleCreate}>add issue</Button>
-                <Col sm={5}>
-                  <Row>
-                    <Navbar.Text>{tasks.length} issues</Navbar.Text>
-                  </Row>
-                  <Row>
-                    <Navbar.Text>
-                      <StoryPoints tasks={tasks} />
-                    </Navbar.Text>
-                  </Row>
-                </Col>
-              </Container>
-            </Navbar>
-            {tasks.map((task, index) => {
-              return <TaskCard key={task.id} task={task} />;
-            })}
+            <Col sm={3}>
+              <Navbar.Brand>ISSUES</Navbar.Brand>
+            </Col>
+            <Button onClick={handleCreate}>add issue</Button>
+            <Col sm={5}>
+              <Row>
+                <Navbar.Text>{tasks.length} issues</Navbar.Text>
+              </Row>
+              <Row>
+                <Navbar.Text>
+                  <StoryPoints tasks={tasks} />
+                </Navbar.Text>
+              </Row>
+            </Col>
           </Container>
+        </Navbar>
+        {tasks.map((task, index) => {
+          return <TaskCard key={task.id} task={task} />;
+        })}
+      </Container>
     </div>
   );
 }
