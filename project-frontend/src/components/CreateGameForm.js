@@ -10,6 +10,7 @@ import { updateGameState } from "./MainBody";
 import { updateVoterState } from "./CardGrid";
 import { useNavigate } from "react-router-dom";
 import { updateTasks } from "./TaskList";
+import { updateHistory } from "./HistoryPopup";
 import { updateIssuePoint } from "./VoteList";
 //import TaskListContext from "../context/TaskListContext";
 
@@ -54,6 +55,7 @@ export default function CreateGameForm() {
 
           let tasks = data.issues;
           updateTasks(tasks);
+          updateHistory(tasks);
           updateIssuePoint(data.issuePoints);
 
           setUpdated((prev) => !prev);

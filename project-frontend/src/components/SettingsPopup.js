@@ -29,14 +29,14 @@ function SettingsPopup(props) {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group className="mb-3">
+          {/* <Form.Group className="mb-3">
             <Form.Label>Game Facilitator</Form.Label>
             <Form.Select>
               <option>Option1</option>
               <option>Option2</option>
               <option>Option3</option>
             </Form.Select>
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group className="mb-3">
             <Form.Label>Game's Name</Form.Label>
             <Form.Control
@@ -45,30 +45,30 @@ function SettingsPopup(props) {
               defaultValue={roomName}
             ></Form.Control>
           </Form.Group>
-          <Form.Group className="mb-3">
+          {/* <Form.Group className="mb-3">
             <Form.Label>Voting System</Form.Label>
             <Form.Select>
               <option>Option1</option>
               <option>Option2</option>
               <option>Option3</option>
             </Form.Select>
-          </Form.Group>
-          <Form.Group className="mb-3">
+          </Form.Group> */}
+          {/* <Form.Group className="mb-3">
             <Form.Label>Who Can Reveal Cards</Form.Label>
             <Form.Select>
               <option>Option1</option>
               <option>Option2</option>
               <option>Option3</option>
             </Form.Select>
-          </Form.Group>
-          <Form.Group className="mb-3">
+          </Form.Group> */}
+          {/* <Form.Group className="mb-3">
             <Form.Label>Who Can Manage Issues</Form.Label>
             <Form.Select>
               <option>Option1</option>
               <option>Option2</option>
               <option>Option3</option>
             </Form.Select>
-          </Form.Group>
+          </Form.Group> */}
           <div className="d-grid gap-2">
             <Button
               variant="primary"

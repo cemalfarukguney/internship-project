@@ -1,36 +1,51 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Form, CloseButton, Table, Modal } from "react-bootstrap";
+import { UserContext } from "../context/UserContext";
+
+let issues;
+export function updateHistory(newIssues) {
+  issues = newIssues;
+  console.log("ISSUES UPDATED");
+}
 
 function HistoryPopup(props) {
+  const [issueState, setIssueState] = useState([]);
+  const { updated, setUpdated } = useContext(UserContext)[2];
+
+  let isMounted;
+  useEffect(() => {
+    if (isMounted) {
+      setIssueState(issues);
+      console.log("issue State UPDATED");
+    }
+  }, [updated]);
   return props.trigger ? (
     <Modal show={props.trigger} centered size="lg">
+      {(isMounted = true)}
       <Modal.Header>
         <h2>Voting History</h2>
       </Modal.Header>
       <Modal.Body>
         <Form.Select className="narrow-select">
           <option>All Options</option>
-          <option>Option 2</option>
         </Form.Select>
         <br></br>
         <Table striped bordered hover size>
           <thead>
-            <th>Issue</th>
-            <th>Result</th>
-            <th>Agreement</th>
-            <th>Duration</th>
-            <th>Players voted</th>
-            <th>Time</th>
+            <tr>
+              <th>Issue</th>
+              <th>Name</th>
+              <th>Result</th>
+            </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Issue1</td>
-              <td>10</td>
-              <td>88%</td>
-              <td>02:00</td>
-              <td>3</td>
-              <td>{new Date().toLocaleString()}</td>
-            </tr>
+            {issueState?.map((issue) => {
+              <tr>
+                <td>{issue.id}</td>
+                <td>{issue.issueName}</td>
+                <td>{issue.storyPoint}</td>
+              </tr>;
+            })}
           </tbody>
         </Table>
         {props.children}
