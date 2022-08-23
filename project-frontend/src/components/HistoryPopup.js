@@ -5,23 +5,18 @@ import { UserContext } from "../context/UserContext";
 let issues;
 export function updateHistory(newIssues) {
   issues = newIssues;
-  console.log("ISSUES UPDATED");
 }
 
 function HistoryPopup(props) {
   const [issueState, setIssueState] = useState([]);
   const { updated, setUpdated } = useContext(UserContext)[2];
 
-  let isMounted;
   useEffect(() => {
-    if (isMounted) {
-      setIssueState(issues);
-      console.log("issue State UPDATED");
-    }
+    setIssueState(issues);
   }, [updated]);
+
   return props.trigger ? (
     <Modal show={props.trigger} centered size="lg">
-      {(isMounted = true)}
       <Modal.Header>
         <h2>Voting History</h2>
       </Modal.Header>
@@ -34,17 +29,19 @@ function HistoryPopup(props) {
           <thead>
             <tr>
               <th>Issue</th>
-              <th>Name</th>
+              <th>Title</th>
               <th>Result</th>
             </tr>
           </thead>
           <tbody>
             {issueState?.map((issue) => {
-              <tr>
-                <td>{issue.id}</td>
-                <td>{issue.issueName}</td>
-                <td>{issue.storyPoint}</td>
-              </tr>;
+              return (
+                <tr>
+                  <td>{issue.id}</td>
+                  <td>{issue.issueName}</td>
+                  <td>{issue.storyPoint}</td>
+                </tr>
+              );
             })}
           </tbody>
         </Table>

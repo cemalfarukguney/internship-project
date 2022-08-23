@@ -11,7 +11,7 @@ import { updateVoterState } from "./CardGrid";
 import { useNavigate } from "react-router-dom";
 import { updateTasks } from "./TaskList";
 import { updateIssuePoint } from "./VoteList";
-import { waitFor } from "@testing-library/react";
+import { updateHistory } from "./HistoryPopup";
 
 function JoinGameForm() {
   const [show, setShow] = useState(false);
@@ -50,6 +50,7 @@ function JoinGameForm() {
           updateIssuePoint(data.issuePoints);
           let tasks = data.issues;
           updateTasks(tasks);
+          updateHistory(tasks);
 
           setUpdated((prev) => !prev);
         }
